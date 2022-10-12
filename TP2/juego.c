@@ -7,7 +7,8 @@
 #include <time.h>
 
 
-int main(){
-
+/*int main(){
+    juego_t juego;
+    char contrasenia[6]
     
-}
+}*/

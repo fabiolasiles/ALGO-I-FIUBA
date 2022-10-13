@@ -24,6 +24,7 @@
 #define SEGUNDA_OPCION 'B'
 #define TERCERA_OPCION 'C'
 #define CUARTA_OPCION 'D'
+#define MAX_CONTRASENIA 6
 
 
 //__________________________ F U N C I O N E S     Y    P R O C E D I M I E N T O S_____________________________________//
@@ -241,28 +242,7 @@ char asignar_letra(bool respuesta_tres){
 }
 
 
-/*
- * PRE: Recibe respuestas validadas a las  cinco preguntas hechas previamente.
- * POST: Compueba si las repuestas coinciden con las validas y muestra por pantalla todas las letras acertadas de la contraseña.
- */
-
-void  comprobar_mostrar_respuestas(char respuesta_uno,char respuesta_dos,bool respuesta_tres,int respuesta_cuatro,char respuesta_cinco){
-    
-    char primer_letra_contrasenia = comprobar_letra(respuesta_uno,OPCION_CORRECTA_CODIGO_DE_MEDIA,LETRA_CONTRASENIA_UNO);
-    char segunda_letra_contrasenia = comprobar_letra(respuesta_dos,OPCION_CORRECTA_MASCOTA_DE_LILO,LETRA_CONTRASENIA_DOS);
-    char tercera_letra_contrasenia = asignar_letra(respuesta_tres);
-    char sexta_letra_contrasenia = asignar_letra(respuesta_tres);
-    char cuarta_letra_contrasenia = comprobar_numero(respuesta_cuatro,LETRA_CONTRASENIA_CUATRO);
-    char quinta_letra_contrasenia = comprobar_letra(respuesta_cinco,OPCION_CORRECTA_TIGRE_DE_LA_PRINCESA,LETRA_CONTRASENIA_CINCO);
-    
-    printf("-%c%c%c%c%c%c-",primer_letra_contrasenia,segunda_letra_contrasenia,tercera_letra_contrasenia,cuarta_letra_contrasenia,sexta_letra_contrasenia,quinta_letra_contrasenia);
-}
-
-
-//____________________________________P R O G R A M A     P R I N C I P A L ____________________________________________//
-
-int main(){
-
+void adivinar_contrasenia(char contrasenia_adivinada[MAX_CONTRASENIA ]){
     char opcion_pregunta = 't';
     char opcion_pregunta_dos = 'c';
     char opcion_pregunta_cinco= 't';
@@ -279,6 +259,21 @@ int main(){
     respuesta_cuatro = pregunta_numero_rayo(&respuesta_cuatro);
     respuesta_cinco= pregunta_tigre_de_la_princesa_jazmin(&opcion_pregunta_cinco);
 
-    comprobar_mostrar_respuestas(respuesta_uno,respuesta_dos,respuesta_tres,respuesta_cuatro,respuesta_cinco);
-    return 0;
+    //comprobar_mostrar_respuestas(respuesta_uno,respuesta_dos,respuesta_tres,respuesta_cuatro,respuesta_cinco);
+    char primer_letra_contrasenia = comprobar_letra(respuesta_uno,OPCION_CORRECTA_CODIGO_DE_MEDIA,LETRA_CONTRASENIA_UNO);
+    char segunda_letra_contrasenia = comprobar_letra(respuesta_dos,OPCION_CORRECTA_MASCOTA_DE_LILO,LETRA_CONTRASENIA_DOS);
+    char tercera_letra_contrasenia = asignar_letra(respuesta_tres);
+    char sexta_letra_contrasenia = asignar_letra(respuesta_tres);
+    char cuarta_letra_contrasenia = comprobar_numero(respuesta_cuatro,LETRA_CONTRASENIA_CUATRO);
+    char quinta_letra_contrasenia = comprobar_letra(respuesta_cinco,OPCION_CORRECTA_TIGRE_DE_LA_PRINCESA,LETRA_CONTRASENIA_CINCO);
+
+    contrasenia_adivinada[0] = primer_letra_contrasenia ;
+    contrasenia_adivinada[1] = segunda_letra_contrasenia;
+    contrasenia_adivinada[2] = tercera_letra_contrasenia;
+    contrasenia_adivinada[3] = cuarta_letra_contrasenia;
+    contrasenia_adivinada[4] = sexta_letra_contrasenia;
+    contrasenia_adivinada[5] = quinta_letra_contrasenia;
+
+
+
 }

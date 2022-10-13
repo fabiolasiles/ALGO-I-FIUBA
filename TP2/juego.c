@@ -8,28 +8,11 @@
 #define MAX_CONTRASENIA 6
 #define CONTRASENIA "KRONOS"
 
-
+/*
+ * PRE: -
+ * POST:  Verifica que se haya descubierto la contraseña de forma completa en el caso afirmativo devuelve true, sino false.
+ */
 bool validar_contrasenia(char contrasenia_adivinada[MAX_CONTRASENIA]){
-
-    
-    /*for (int i= 0;i<=5;i++){
-        printf("CONTRASENIA POSTA %i es %c\n",i,contrasenia[i]);
-    }
-    printf("_________________________________________");*/
-    /*printf("_________________________________________");
-    for (int i= 0;i<=5;i++){
-        printf("eL NUMERO %i es %c\n",i,contrasenia_adivinada[i]);
-    }
-    printf("_________________________________________");
-    
-    
-    if(strcmp(contrasenia_adivinada,CONTRASENIA)==0){//ENTONCES SI ES IGUAL A CERO ES FALSE???
-        
-        return true;
-    }else{
-        printf("  nooooooooooooooo ES LA CONTRASENIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n");
-        return false;
-    }*/
     return (strcmp(contrasenia_adivinada,CONTRASENIA)==0);
 }
 
@@ -37,7 +20,7 @@ bool validar_contrasenia(char contrasenia_adivinada[MAX_CONTRASENIA]){
 
 
 int main(){
-    
+
     char contrasenia_adivinada[MAX_CONTRASENIA];
     
     adivinar_contrasenia(contrasenia_adivinada);

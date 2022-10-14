@@ -1,4 +1,9 @@
 #include "kronos.h"
+#include <string.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #define ELASTIC_GIRL 'E'
 #define VIOLETA 'V'
 #define  DASH 'D'
@@ -28,8 +33,8 @@
 
 coordenada_t coordenada_aleatoria(int alto,int ancho){
     coordenada_t coordenada;
-    coordenada.fila = (rand()% alto);
-    coordenada.columna = (rand()% ancho);
+    coordenada.fila = rand()% alto;
+    coordenada.columna = rand()% ancho;
     return coordenada;
 
 
@@ -70,7 +75,7 @@ personaje_t crear_personaje(char nombre_personaje){
         personaje.posicion = coordenada_aleatoria(MAX_ALTO,MAX_ANCHO);
 
     }
-
+    return personaje;
 }
 
 

@@ -20,6 +20,8 @@ bool validar_contrasenia(char contrasenia_adivinada[MAX_CONTRASENIA]){
 
 
 int main(){
+    
+    srand((unsigned)time(NULL));
 
     char contrasenia_adivinada[MAX_CONTRASENIA];
     
@@ -30,6 +32,11 @@ int main(){
     juego_t juego;
 
     inicializar_juego(&juego,contrasenia_completa);
+    /*printf("INFO ELASTIC");
+    printf("ELASTIC  se encuentra en las coordenadas(%i,%i) \n",juego.personajes[0].posicion.fila,juego.personajes[0].posicion.columna);
+        printf("DASH  ESTA EN EL CUADRANTE(%i) \n",juego.personajes[2].cuadrante_inicial);
+
+    printf("\n");*/
     
    
    

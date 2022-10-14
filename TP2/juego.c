@@ -30,7 +30,8 @@ int main(){
     juego_t juego;
 
     inicializar_juego(&juego,contrasenia_completa);
-    printf("PRUEBAAAAAAA");
-    printf("Prueba  with Erick");
+    
+   
+   
 
 }

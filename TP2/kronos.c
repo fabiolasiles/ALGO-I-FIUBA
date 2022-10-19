@@ -78,6 +78,38 @@ personaje_t crear_personaje(char nombre_personaje){
     return personaje;
 }
 
+/*
+ * Verifica que las coordenadas de los vectores no sean iguales en el caso, de que se repitan asigna una coordenada nueva.
+ */
+
+/*void  verificar_coordenadas_personajes(personaje_t personajes[MAX_PERSONAJES], int tope_personajes){
+   
+    printf("%i,=====el tope es  ==== \n", tope_personajes);
+    for(int i=0;i<=tope_personajes;i++){
+        printf("%i,%i\n",personajes[i].posicion.fila,personajes[i].posicion.columna);
+        
+
+    }
+    printf("==========VECTOR==========\n");
+
+    int i = 0;
+    int k = 0;
+    
+    while (k<=tope_personajes-1){
+        //printf("cambia de posicicon");
+        
+        while (i<tope_personajes){
+        printf("(%i,%i) COMPARO LA COORDENADA CON (%i,%i)\n",personajes[k].posicion.fila,personajes[k].posicion.columna,personajes[i+1].posicion.fila,personajes[i+1].posicion.columna);
+            while ((personajes[k].posicion.fila == personajes[i+1].posicion.fila)&&(personajes[k].posicion.columna == personajes[i+1].posicion.columna)){
+                personajes[i+1].posicion = coordenada_aleatoria(20,20);
+            }
+            i++;
+        }
+        k=k+1;
+        i=k;
+        //i=k;
+    }
+}*/
 
 /*
  * Inicializará el vector de los 4 personajes.
@@ -86,11 +118,16 @@ void inicializar_personajes(personaje_t personajes[MAX_PERSONAJES],int* tope_per
    (*tope_personajes) = 0;
     personajes[(*tope_personajes)] = crear_personaje(ELASTIC_GIRL);
     (*tope_personajes)++;
+    
     personajes[(*tope_personajes)] = crear_personaje(VIOLETA);
     (*tope_personajes)++;
     personajes[(*tope_personajes)] = crear_personaje(DASH);
     (*tope_personajes)++;
     personajes[(*tope_personajes)] = crear_personaje(MR_INCREIBLE);
+  
+   //verificar_coordenadas_personajes(personajes,(*tope_personajes));
+
+
 }
 
 
@@ -100,5 +137,6 @@ void inicializar_personajes(personaje_t personajes[MAX_PERSONAJES],int* tope_per
  */ 
 void inicializar_juego(juego_t* juego, bool contrasenia_completa){
     inicializar_personajes(juego->personajes,&juego->tope_personajes);
+    
 }
 

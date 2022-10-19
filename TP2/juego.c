@@ -26,8 +26,10 @@ int main(){
     char contrasenia_adivinada[MAX_CONTRASENIA];
     
     adivinar_contrasenia(contrasenia_adivinada);
+     
     
     bool contrasenia_completa = validar_contrasenia(contrasenia_adivinada);
+   
 
     juego_t juego;
 

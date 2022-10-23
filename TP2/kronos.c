@@ -27,6 +27,26 @@
 #define MOV_PODER_MR_INCREIBLE 0
 #define CUADRANTE_MR_INCREIBLE 4
 
+
+#define PRIMER_CUADRANTE_FIL 0
+#define PRIMER_CUADRANTE_COL 9
+#define SEGUNDO_CUADRANTE_FIL 10
+#define SEGUNDO_CUADRANTE_COL 19
+#define TERCER_CUADRANTE_FIL 0
+#define TERCER_CUADRANTE_COL 9
+#define CUARTO_CUADRANTE_FIL 10
+#define CUARTO_CUADRANTE_COL 19
+
+#define ABAJO_DERECHA 1
+#define ARRIBA_IZQUIERDA 2
+#define ARRIBA_DERECHA 3
+
+
+#define LASERS_CONTRASENIA_ACERTADA 6
+#define LASERS_CONTRASENIA_NO_ACERTADA 10
+
+
+        
 /*
  * Asignara una coordenada aleatoria  considerando los rangos (alto y ancho) que se les asignen.
  */
@@ -111,6 +131,10 @@ personaje_t crear_personaje(char nombre_personaje){
     }
 }*/
 
+
+
+
+
 /*
  * Inicializará el vector de los 4 personajes.
  */ 
@@ -131,11 +155,179 @@ void inicializar_personajes(personaje_t personajes[MAX_PERSONAJES],int* tope_per
 }
 
 
+
+/*
+ * funcion que elige la forma que se llenara el laser
+ 
+
+void cargar_tipo_laser_aleatorio(int forma_de_laser_aleatorio,int tope_lasers, coordenada_t posicion_del_robot, coordenada_t lasers[MAX_LASERS]){
+    switch (forma_de_laser_aleatorio){
+        int j=1;
+        int k=1;
+        ARRIBA_DERECHA:
+            for (int i = 0;i<= robot.tope_lasers;i++){
+                if (i<3){
+                    lasers[i].fila=posicion_del_robot.fil -j;
+                    lasers[i].colum=posicion_del_robot.col;
+                    j++;
+                }else{
+                
+                    lasers[i].colum =robot_posicion.col+k;
+                    laser[i].fila =robot_posicion.fila;
+                    k++;
+                }
+                
+            }   
+
+        ARRIBA_IZQUIERDA:
+             for (int i = 0;i<= robot.tope_lasers;i++){
+                robot.posicicon.fil -1;
+                robot.posicicon.col-1;
+                robot.posicion[i]=robot.posicion;
+            }
+        ABAJO_DERECHA:
+             for (int i = 0;i<= robot.tope_lasers;i++){
+                robot.posicicon.fil +1;
+                robot.posicicon.col+1;
+                robot.posicion[i]=robot.posicion;
+            }
+        default:
+             for (int i = 0;i<= robot.tope_lasers;i++){
+                robot.posicicon.fil +1;
+                robot.posicicon.col-1;
+                robot.posicion[i]=robot.posicion;
+            }
+    }
+
+}*/
+
+/*
+ * funcion que elige la forma que se llenara el laser
+ */
+
+void cargar_tipo_laser_aleatorio(int forma_de_laser_aleatorio,int tope_lasers,coordenada_t lasers[MAX_LASERS], coordenada_t posicion_del_robot){
+    int j=1;
+    int k=1;
+    for (int i = 0;i<tope_lasers;i++){
+        switch(forma_de_laser_aleatorio){
+            case ARRIBA_DERECHA:
+                if (i<3){
+                    lasers[i].fila = posicion_del_robot.fila -j;
+                    lasers[i].columna = posicion_del_robot.columna;
+                    
+                    j++;
+                }else{
+                    lasers[i].columna = posicion_del_robot.columna+k;
+                    lasers[i].fila = posicion_del_robot.fila;
+                    k++;
+                }
+                break;   
+            case ARRIBA_IZQUIERDA:
+                if (i<3){
+                    lasers[i].columna = posicion_del_robot.columna-k;
+                    lasers[i].fila = posicion_del_robot.fila;
+                    k++;
+                    
+                }else{
+                    lasers[i].fila=posicion_del_robot.fila-j;
+                    lasers[i].columna=posicion_del_robot.columna;
+                    j++;
+                }
+                break;
+            case ABAJO_DERECHA:
+                if (i<3){
+                    lasers[i].columna=posicion_del_robot.columna+k;
+                    lasers[i].fila =posicion_del_robot.fila;
+                    k++;
+                }else{
+                    lasers[i].columna =posicion_del_robot.columna;
+                    lasers[i].fila =posicion_del_robot.fila+j;
+                    j++;
+                }
+                break;
+            default:
+                if (i<3){
+                    lasers[i].columna =posicion_del_robot.columna;
+                    lasers[i].fila =posicion_del_robot.fila+j;
+                    j++;
+                   
+                }else{
+                    lasers[i].columna = posicion_del_robot.columna;
+                    lasers[i].fila = posicion_del_robot.fila-k;
+                    k++;
+                break;
+                }
+        
+        }
+            
+    }
+
+}
+
+
+
+
+
+/*
+ * Procedimiento que llenara los lasers del robot correspondiente a cada cuadrante.
+ */ 
+
+void llenar_lasers( coordenada_t lasers[MAX_LASERS], int tope_lasers,coordenada_t posicion_del_robot){
+
+   int forma_de_laser_aleatorio = 4;
+   cargar_tipo_laser_aleatorio(forma_de_laser_aleatorio,tope_lasers,lasers,posicion_del_robot);
+
+}
+
+
+/*
+ * Inicializará cada uno de los robots,cargando la informacion correspondiente
+ */
+
+robot_t crear_robot(bool contrasenia_completa, int CUADRANTE_FIL,int CUADRANTE_COL){
+    robot_t robot;
+    robot.posicion = coordenada_aleatoria(CUADRANTE_FIL,CUADRANTE_COL);
+    if(contrasenia_completa){
+        robot.tope_lasers = LASERS_CONTRASENIA_ACERTADA;
+    }else{
+        robot.tope_lasers = LASERS_CONTRASENIA_NO_ACERTADA;
+    }
+    llenar_lasers(robot.lasers,robot.tope_lasers,robot.posicion);
+    return robot;
+}
+
+
+/*
+ * Inicializará el vector de 4 robots.
+ */ 
+
+void inicializar_robots(robot_t robots[MAX_ROBOTS], bool contrasenia_completa, int* tope_robots){
+    printf("SE INICIALIZARA EL ROBOT");
+
+    (*tope_robots) = 0;
+    robots[0] = crear_robot(contrasenia_completa,PRIMER_CUADRANTE_FIL,PRIMER_CUADRANTE_COL);
+    (*tope_robots)++;
+    
+    robots[1] = crear_robot(contrasenia_completa,SEGUNDO_CUADRANTE_FIL,SEGUNDO_CUADRANTE_COL);
+    (*tope_robots)++;
+   
+    robots[2] = crear_robot(contrasenia_completa,TERCER_CUADRANTE_FIL,TERCER_CUADRANTE_COL);
+    (*tope_robots)++;
+    robots[3] = crear_robot(contrasenia_completa,CUARTO_CUADRANTE_FIL,CUARTO_CUADRANTE_COL);
+    (*tope_robots)++;
+
+}
+
+
+
+
 /*
  * Inicializará el juego, cargando toda la información inicial de los robots, los supertrajes, el personaje, los lásers y las pinzas.
  * El campo id_personaje_actual comienza en 1.
  */ 
 void inicializar_juego(juego_t* juego, bool contrasenia_completa){
+
+    inicializar_robots(juego->robots,contrasenia_completa,&juego->tope_robots);
     inicializar_personajes(juego->personajes,&juego->tope_personajes);
     
 }

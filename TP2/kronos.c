@@ -28,16 +28,6 @@
 #define MOV_PODER_MR_INCREIBLE 0
 #define CUADRANTE_MR_INCREIBLE 4
 
-
-#define PRIMER_CUADRANTE_FIL 10 //0
-#define PRIMER_CUADRANTE_COL 10
-#define SEGUNDO_CUADRANTE_FIL 10
-#define SEGUNDO_CUADRANTE_COL 20
-#define TERCER_CUADRANTE_FIL 10
-#define TERCER_CUADRANTE_COL 9
-#define CUARTO_CUADRANTE_FIL 10
-#define CUARTO_CUADRANTE_COL 19
-
 #define PRIMER_CUADRANTE 1
 #define SEGUNDO_CUADRANTE 2
 #define TERCER_CUADRANTE 3
@@ -57,7 +47,7 @@
  * Asignara una coordenada aleatoria  considerando los rangos (alto y ancho) que se les asignen.
  */
 
-coordenada_t coordenada_aleatoria(int alto,int fin, int cuadrante){
+coordenada_t coordenada_aleatoria(int cuadrante){
     coordenada_t coordenada;
     if(PRIMER_CUADRANTE == cuadrante){
         coordenada.fila = rand()% 10;
@@ -295,7 +285,7 @@ void cargar_tipo_laser_aleatorio(int forma_de_laser_aleatorio,int tope_lasers,co
 
 void llenar_lasers( coordenada_t lasers[MAX_LASERS], int tope_lasers,coordenada_t posicion_del_robot){
 
-   int forma_de_laser_aleatorio = rand() % 3 + 1;
+   int forma_de_laser_aleatorio = rand() % 4 + 1;
    cargar_tipo_laser_aleatorio(forma_de_laser_aleatorio,tope_lasers,lasers,posicion_del_robot);
 
 }
@@ -305,9 +295,9 @@ void llenar_lasers( coordenada_t lasers[MAX_LASERS], int tope_lasers,coordenada_
  * Inicializará cada uno de los robots,cargando la informacion correspondiente
  */
 
-robot_t crear_robot(bool contrasenia_completa, int CUADRANTE_FIL,int CUADRANTE_COL, int cuadrante){
+robot_t crear_robot(bool contrasenia_completa, int cuadrante){
     robot_t robot;
-    robot.posicion = coordenada_aleatoria(CUADRANTE_FIL,CUADRANTE_COL,cuadrante);
+    robot.posicion = coordenada_aleatoria(cuadrante);
     if(contrasenia_completa){
         robot.tope_lasers = LASERS_CONTRASENIA_ACERTADA;
     }else{
@@ -329,15 +319,15 @@ void inicializar_robots(robot_t robots[MAX_ROBOTS], bool contrasenia_completa, i
 
     (*tope_robots) = 0;
     
-    robots[0] = crear_robot(contrasenia_completa,PRIMER_CUADRANTE_FIL,PRIMER_CUADRANTE_COL, PRIMER_CUADRANTE);
+    robots[0] = crear_robot(contrasenia_completa, PRIMER_CUADRANTE);
     (*tope_robots)++;
     
-    robots[1] = crear_robot(contrasenia_completa,SEGUNDO_CUADRANTE_FIL,SEGUNDO_CUADRANTE_COL, SEGUNDO_CUADRANTE);
+    robots[1] = crear_robot(contrasenia_completa, SEGUNDO_CUADRANTE);
     (*tope_robots)++;
    
-    robots[2] = crear_robot(contrasenia_completa,TERCER_CUADRANTE_FIL,TERCER_CUADRANTE_COL, TERCER_CUADRANTE);
+    robots[2] = crear_robot(contrasenia_completa, TERCER_CUADRANTE);
     (*tope_robots)++;
-    robots[3] = crear_robot(contrasenia_completa,CUARTO_CUADRANTE_FIL,CUARTO_CUADRANTE_COL, CUARTO_CUADRANTE);
+    robots[3] = crear_robot(contrasenia_completa, CUARTO_CUADRANTE);
     (*tope_robots)++;
 
 }

@@ -14,6 +14,7 @@
 #define MAX_ALTO 20 // nose si irian estos margenes ya que van a  ir cambiando constantemente.
 #define MAX_ANCHO 20
 
+#define MAX 30
 
 #define MOV_INICIALES_VIOLETA 30
 #define MOV_PODER_VIOLETA 0
@@ -28,14 +29,19 @@
 #define CUADRANTE_MR_INCREIBLE 4
 
 
-#define PRIMER_CUADRANTE_FIL 0
-#define PRIMER_CUADRANTE_COL 9
+#define PRIMER_CUADRANTE_FIL 10 //0
+#define PRIMER_CUADRANTE_COL 10
 #define SEGUNDO_CUADRANTE_FIL 10
-#define SEGUNDO_CUADRANTE_COL 19
-#define TERCER_CUADRANTE_FIL 0
+#define SEGUNDO_CUADRANTE_COL 20
+#define TERCER_CUADRANTE_FIL 10
 #define TERCER_CUADRANTE_COL 9
 #define CUARTO_CUADRANTE_FIL 10
 #define CUARTO_CUADRANTE_COL 19
+
+#define PRIMER_CUADRANTE 1
+#define SEGUNDO_CUADRANTE 2
+#define TERCER_CUADRANTE 3
+#define CUARTO_CUADRANTE 4
 
 #define ABAJO_DERECHA 1
 #define ARRIBA_IZQUIERDA 2
@@ -51,18 +57,30 @@
  * Asignara una coordenada aleatoria  considerando los rangos (alto y ancho) que se les asignen.
  */
 
-coordenada_t coordenada_aleatoria(int alto,int ancho){
+coordenada_t coordenada_aleatoria(int alto,int fin, int cuadrante){
     coordenada_t coordenada;
-    coordenada.fila = rand()% alto;
-    coordenada.columna = rand()% ancho;
-    return coordenada;
+    if(PRIMER_CUADRANTE == cuadrante){
+        coordenada.fila = rand()% 10;
+        coordenada.columna = rand()% 10; 
+    }else if(SEGUNDO_CUADRANTE == cuadrante){
+        coordenada.fila = rand()% 10;
+        coordenada.columna = rand()% 10 + 10;
+    }else if(TERCER_CUADRANTE == cuadrante){
+        coordenada.fila = rand()% 10 + 10;
+        coordenada.columna = rand()%10;
+    }else if(CUARTO_CUADRANTE == cuadrante){
+        coordenada.fila = rand()% 10 + 10;
+        coordenada.columna = rand()%10 + 10;
+    }
 
+    return coordenada;
 
 }
 
 /*
  * Inicializará cada uno de los personajes,cargando la informacion correspondiente a cada personaje.
  */ 
+/*
 personaje_t crear_personaje(char nombre_personaje){
     personaje_t personaje;
     if (nombre_personaje == ELASTIC_GIRL){
@@ -97,6 +115,7 @@ personaje_t crear_personaje(char nombre_personaje){
     }
     return personaje;
 }
+*/
 
 /*
  * Verifica que las coordenadas de los vectores no sean iguales en el caso, de que se repitan asigna una coordenada nueva.
@@ -138,6 +157,7 @@ personaje_t crear_personaje(char nombre_personaje){
 /*
  * Inicializará el vector de los 4 personajes.
  */ 
+/*
 void inicializar_personajes(personaje_t personajes[MAX_PERSONAJES],int* tope_personajes){
    (*tope_personajes) = 0;
     personajes[(*tope_personajes)] = crear_personaje(ELASTIC_GIRL);
@@ -154,7 +174,7 @@ void inicializar_personajes(personaje_t personajes[MAX_PERSONAJES],int* tope_per
 
 }
 
-
+*/
 
 /*
  * funcion que elige la forma que se llenara el laser
@@ -208,10 +228,11 @@ void cargar_tipo_laser_aleatorio(int forma_de_laser_aleatorio,int tope_lasers, c
 void cargar_tipo_laser_aleatorio(int forma_de_laser_aleatorio,int tope_lasers,coordenada_t lasers[MAX_LASERS], coordenada_t posicion_del_robot){
     int j=1;
     int k=1;
+    int longitud_lasers = (tope_lasers/2);
     for (int i = 0;i<tope_lasers;i++){
         switch(forma_de_laser_aleatorio){
             case ARRIBA_DERECHA:
-                if (i<3){
+                if (i<longitud_lasers){
                     lasers[i].fila = posicion_del_robot.fila -j;
                     lasers[i].columna = posicion_del_robot.columna;
                     
@@ -223,7 +244,7 @@ void cargar_tipo_laser_aleatorio(int forma_de_laser_aleatorio,int tope_lasers,co
                 }
                 break;   
             case ARRIBA_IZQUIERDA:
-                if (i<3){
+                if (i<longitud_lasers){
                     lasers[i].columna = posicion_del_robot.columna-k;
                     lasers[i].fila = posicion_del_robot.fila;
                     k++;
@@ -235,7 +256,7 @@ void cargar_tipo_laser_aleatorio(int forma_de_laser_aleatorio,int tope_lasers,co
                 }
                 break;
             case ABAJO_DERECHA:
-                if (i<3){
+                if (i<longitud_lasers){
                     lasers[i].columna=posicion_del_robot.columna+k;
                     lasers[i].fila =posicion_del_robot.fila;
                     k++;
@@ -246,14 +267,14 @@ void cargar_tipo_laser_aleatorio(int forma_de_laser_aleatorio,int tope_lasers,co
                 }
                 break;
             default:
-                if (i<3){
+                if (i<longitud_lasers){
                     lasers[i].columna =posicion_del_robot.columna;
                     lasers[i].fila =posicion_del_robot.fila+j;
                     j++;
                    
                 }else{
-                    lasers[i].columna = posicion_del_robot.columna;
-                    lasers[i].fila = posicion_del_robot.fila-k;
+                    lasers[i].columna = posicion_del_robot.columna-k;
+                    lasers[i].fila = posicion_del_robot.fila;
                     k++;
                 break;
                 }
@@ -274,7 +295,7 @@ void cargar_tipo_laser_aleatorio(int forma_de_laser_aleatorio,int tope_lasers,co
 
 void llenar_lasers( coordenada_t lasers[MAX_LASERS], int tope_lasers,coordenada_t posicion_del_robot){
 
-   int forma_de_laser_aleatorio = 4;
+   int forma_de_laser_aleatorio = rand() % 3 + 1;
    cargar_tipo_laser_aleatorio(forma_de_laser_aleatorio,tope_lasers,lasers,posicion_del_robot);
 
 }
@@ -284,14 +305,15 @@ void llenar_lasers( coordenada_t lasers[MAX_LASERS], int tope_lasers,coordenada_
  * Inicializará cada uno de los robots,cargando la informacion correspondiente
  */
 
-robot_t crear_robot(bool contrasenia_completa, int CUADRANTE_FIL,int CUADRANTE_COL){
+robot_t crear_robot(bool contrasenia_completa, int CUADRANTE_FIL,int CUADRANTE_COL, int cuadrante){
     robot_t robot;
-    robot.posicion = coordenada_aleatoria(CUADRANTE_FIL,CUADRANTE_COL);
+    robot.posicion = coordenada_aleatoria(CUADRANTE_FIL,CUADRANTE_COL,cuadrante);
     if(contrasenia_completa){
         robot.tope_lasers = LASERS_CONTRASENIA_ACERTADA;
     }else{
         robot.tope_lasers = LASERS_CONTRASENIA_NO_ACERTADA;
     }
+
     llenar_lasers(robot.lasers,robot.tope_lasers,robot.posicion);
     return robot;
 }
@@ -302,24 +324,47 @@ robot_t crear_robot(bool contrasenia_completa, int CUADRANTE_FIL,int CUADRANTE_C
  */ 
 
 void inicializar_robots(robot_t robots[MAX_ROBOTS], bool contrasenia_completa, int* tope_robots){
+    
     printf("SE INICIALIZARA EL ROBOT");
 
     (*tope_robots) = 0;
-    robots[0] = crear_robot(contrasenia_completa,PRIMER_CUADRANTE_FIL,PRIMER_CUADRANTE_COL);
+    
+    robots[0] = crear_robot(contrasenia_completa,PRIMER_CUADRANTE_FIL,PRIMER_CUADRANTE_COL, PRIMER_CUADRANTE);
     (*tope_robots)++;
     
-    robots[1] = crear_robot(contrasenia_completa,SEGUNDO_CUADRANTE_FIL,SEGUNDO_CUADRANTE_COL);
+    robots[1] = crear_robot(contrasenia_completa,SEGUNDO_CUADRANTE_FIL,SEGUNDO_CUADRANTE_COL, SEGUNDO_CUADRANTE);
     (*tope_robots)++;
    
-    robots[2] = crear_robot(contrasenia_completa,TERCER_CUADRANTE_FIL,TERCER_CUADRANTE_COL);
+    robots[2] = crear_robot(contrasenia_completa,TERCER_CUADRANTE_FIL,TERCER_CUADRANTE_COL, TERCER_CUADRANTE);
     (*tope_robots)++;
-    robots[3] = crear_robot(contrasenia_completa,CUARTO_CUADRANTE_FIL,CUARTO_CUADRANTE_COL);
+    robots[3] = crear_robot(contrasenia_completa,CUARTO_CUADRANTE_FIL,CUARTO_CUADRANTE_COL, CUARTO_CUADRANTE);
     (*tope_robots)++;
 
 }
 
 
+void mostrarCoordenada(coordenada_t coordenada){
+    printf("FIL : %i\n", coordenada.fila);
+    printf("COL : %i\n", coordenada.columna);
+}
 
+void mostrarCoordenadas(coordenada_t coordenadas[MAX], int tope){
+    for(int i = 0; i < tope ; i++){
+        mostrarCoordenada(coordenadas[i]);
+    }
+}
+
+void mostrarRobots(robot_t robots[MAX_ROBOTS], int topeRobot){
+    for(int i = 0 ; i < topeRobot; i++){
+        printf("---------Posiciòn del Robot : ---------\n");
+        mostrarCoordenada(robots[i].posicion);
+        printf("--------Posiciones de sus Lasers : -----------\n");
+        mostrarCoordenadas(robots[i].lasers, robots[i].tope_lasers);
+
+
+    }
+    
+}
 
 /*
  * Inicializará el juego, cargando toda la información inicial de los robots, los supertrajes, el personaje, los lásers y las pinzas.
@@ -327,8 +372,11 @@ void inicializar_robots(robot_t robots[MAX_ROBOTS], bool contrasenia_completa, i
  */ 
 void inicializar_juego(juego_t* juego, bool contrasenia_completa){
 
+    
+    
     inicializar_robots(juego->robots,contrasenia_completa,&juego->tope_robots);
-    inicializar_personajes(juego->personajes,&juego->tope_personajes);
+    mostrarRobots(juego->robots, juego->tope_robots);
+    //inicializar_personajes(juego->personajes,&juego->tope_personajes);
     
 }
 

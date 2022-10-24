@@ -16,6 +16,32 @@ bool validar_contrasenia(char contrasenia_adivinada[MAX_CONTRASENIA]){
     return (strcmp(contrasenia_adivinada,CONTRASENIA)==0);
 }
 
+void inicializar_matriz(char matriz[20][20], int fila, int col){
+    for(int i = 0; i < fila; i++){
+        for(int j = 0; j< col; j++){
+            matriz[i][j] = '*'; 
+        }
+    }
+}
+
+void llenar(char matriz[20][20],int topeFil, int topeCol, coordenada_t coordenadas[], int topeCoord, coordenada_t robotCoord){
+    for(int i = 0; i < topeCoord; i++){
+        if(coordenadas[i].fila >= 0 && coordenadas[i].columna >= 0 && coordenadas[i].fila <=19 && coordenadas[i].columna<=19){
+            matriz[coordenadas[i].fila][coordenadas[i].columna] = 'L';
+        }
+    }
+    matriz[robotCoord.fila][robotCoord.columna] = 'R'; //VER VARIABLES CAMBIARLAS
+}
+
+void mostrarTablero(char matriz[20][20], int topeFila, int topeCol){
+    for(int i = 0; i < topeFila; i++){
+        for(int j = 0; j< topeCol; j++){
+            printf("%c", matriz[i][j]);
+        }
+        printf("\n");
+    }
+}
+
 /*
 void rotacion_lasers(coordenada_t lasers[MAX_LASERS],int tope_lasers){
     int j=1;
@@ -28,7 +54,7 @@ void rotacion_lasers(coordenada_t lasers[MAX_LASERS],int tope_lasers){
         }
     }
 }
-void inicializarJuego2(char matriz[20][20], int fila, int col){
+void inializarMatriz(char matriz[20][20], int fila, int col){
     for(int i = 0; i < fila; i++){
         for(int j = 0; j< col; j++){
             matriz[i][j] = '*'; 
@@ -62,10 +88,11 @@ int main(){
     char contrasenia_adivinada[MAX_CONTRASENIA];
     
     adivinar_contrasenia(contrasenia_adivinada);
+    printf("LINEA 65");
      
     
     bool contrasenia_completa = validar_contrasenia(contrasenia_adivinada);
-   
+   printf("LINEA 69");
 
     juego_t juego;
     printf("SE DESCUBRIO LA CONTRASEÑA");
@@ -84,16 +111,18 @@ int main(){
     coordenada_laser_cinco.columna = 1;
     coordenada_laser_seis.fila = 5;
     coordenada_laser_seis.columna = 1;*/
-/*
-    coordenada_t coorRobot;
-    coorRobot.fila = 2;
-    coorRobot.columna = 1;
+
+    //coordenada_t coorRobot;
+    //coorRobot.fila = 2;
+    //coorRobot.columna = 1;
     char tablero[20][20];
-    inicializarJuego2(tablero, 20, 20);
-    
-    llenarTablero(tablero, 20, 20, lasers, 6, coorRobot);
+    //inicializarJuego2(tablero, 20, 20);
+    inicializar_matriz(tablero,20,20);
+    for (int i=0;i<4;i++){
+        llenar(tablero, 20, 20,juego.robots[i].lasers, juego.robots[i].tope_lasers, juego.robots[i].posicion);
+    }
     mostrarTablero(tablero, 20, 20);
-    */
+    
     /*coordenada_t lasers[6] = {coordenada_laser_uno,coordenada_laser_dos,coordenada_laser_tres,coordenada_laser_cua,coordenada_laser_cinco,coordenada_laser_seis};
 
     rotacion_lasers(lasers,6);

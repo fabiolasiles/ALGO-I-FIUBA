@@ -70,7 +70,7 @@ coordenada_t coordenada_aleatoria(int cuadrante){
 /*
  * Inicializará cada uno de los personajes,cargando la informacion correspondiente a cada personaje.
  */ 
-/*
+
 personaje_t crear_personaje(char nombre_personaje){
     personaje_t personaje;
     if (nombre_personaje == ELASTIC_GIRL){
@@ -79,33 +79,35 @@ personaje_t crear_personaje(char nombre_personaje){
         personaje.movimientos = MOV_INICIALES_ELASTIC;
         personaje.movimientos_con_poder = MOV_PODER_ELASTIC;
         personaje.cuadrante_inicial = CUADRANTE_ELASTIC;
-        personaje.posicion = coordenada_aleatoria(MAX_ALTO,MAX_ANCHO);
+        personaje.posicion = coordenada_aleatoria(PRIMER_CUADRANTE);
+
+
     }else if (nombre_personaje == VIOLETA){
         personaje.poder_activado = false;
         personaje.tiene_supertraje = false;
         personaje.movimientos = MOV_INICIALES_VIOLETA;
         personaje.movimientos_con_poder = MOV_PODER_VIOLETA;
         personaje.cuadrante_inicial = CUADRANTE_VIOLETA;
-        personaje.posicion = coordenada_aleatoria(MAX_ALTO,MAX_ANCHO);
+        personaje.posicion = coordenada_aleatoria(SEGUNDO_CUADRANTE);
     }else if(nombre_personaje == DASH){
         personaje.poder_activado = false;
         personaje.tiene_supertraje = false;
         personaje.movimientos = MOV_INICIALES_DASH;
         personaje.movimientos_con_poder = MOV_PODER_DASH;
         personaje.cuadrante_inicial = CUADRANTE_DASH;
-        personaje.posicion = coordenada_aleatoria(MAX_ALTO,MAX_ANCHO);
+        personaje.posicion = coordenada_aleatoria(TERCER_CUADRANTE);
     }else {
         personaje.poder_activado = false;
         personaje.tiene_supertraje = false;
         personaje.movimientos = MOV_INICIALES_MR_INCREIBLE;
         personaje.movimientos_con_poder = MOV_PODER_MR_INCREIBLE;
         personaje.cuadrante_inicial = CUADRANTE_MR_INCREIBLE;
-        personaje.posicion = coordenada_aleatoria(MAX_ALTO,MAX_ANCHO);
+        personaje.posicion = coordenada_aleatoria(CUARTO_CUADRANTE);//REVISAR LOS CUADRANTESDE LOS PERSONJES 
 
     }
     return personaje;
 }
-*/
+
 
 /*
  * Verifica que las coordenadas de los vectores no sean iguales en el caso, de que se repitan asigna una coordenada nueva.
@@ -147,19 +149,21 @@ personaje_t crear_personaje(char nombre_personaje){
 /*
  * Inicializará el vector de los 4 personajes.
  */ 
-/*
+
 void inicializar_personajes(personaje_t personajes[MAX_PERSONAJES],int* tope_personajes){
-   (*tope_personajes) = 0;
-    personajes[(*tope_personajes)] = crear_personaje(ELASTIC_GIRL);
+   (*tope_personajes) = 0; //revisar LOS CUADRANTES DE LOS PERSONAJES
+    personajes[(*tope_personajes)] = crear_personaje(ELASTIC_GIRL,PRIMER_CUADRANTE);
     (*tope_personajes)++;
     
-    personajes[(*tope_personajes)] = crear_personaje(VIOLETA);
+    personajes[(*tope_personajes)] = crear_personaje(VIOLETA,SEGUNDO_CUADRANTE);
     (*tope_personajes)++;
-    personajes[(*tope_personajes)] = crear_personaje(DASH);
+    personajes[(*tope_personajes)] = crear_personaje(DASH,TERCER_CUADRANTE);
     (*tope_personajes)++;
-    personajes[(*tope_personajes)] = crear_personaje(MR_INCREIBLE);
+    personajes[(*tope_personajes)] = crear_personaje(MR_INCREIBLE,CUARTO_CUADRANTE);
   
-   //verificar_coordenadas_personajes(personajes,(*tope_personajes));
+
+
+   
 
 
 }
@@ -355,6 +359,40 @@ void mostrarRobots(robot_t robots[MAX_ROBOTS], int topeRobot){
     }
     
 }
+//validar coordenada me devuelve true sino encontrò ninguna coordena igual
+/*
+* Asigna una coordenada valida a cada personaje.
+*/
+coordenada_t  obtener_posicion_personaje(coordenada_t lasers[MAX_LASERS],int tope_lasers,coordenada_t posicion_del_robot){
+        
+        coordena_t coordenada_aleatoria_personaje = coordenada_aleatoria()//recibir por parametro el cuadrante
+        bool encontrado = false;
+        while(!encontrado){
+            if(validar_coordenada(lasers,tope_lasers,posicion_del_robot,coordenada_aleatoria_personaje)){
+                encontrado = true;
+            }else{
+                //llamo de vuelta porque se encontrò nuevamente
+            }
+
+        }
+
+        return coordenada_aleatoria_personaje;
+
+}
+
+
+/*
+* Asignarle a cada personaje sus coordenadas en su correspondiente cuadrante.
+*/
+
+void asignar_posiciones_a_personajes(personaje_t personajes[MAX_PERSONAJES],int tope_personajes,robot_t robots[MAX_ROBOTS],int tope_robots){
+    
+    for(int i =0;i<tope_personajes;i++){
+        personajes[i] = obtener_posicion_personaje(robots[i].lasers, robots[i].tope_lasers,robots[i].posicion);
+    }
+    
+}
+
 
 /*
  * Inicializará el juego, cargando toda la información inicial de los robots, los supertrajes, el personaje, los lásers y las pinzas.
@@ -365,8 +403,11 @@ void inicializar_juego(juego_t* juego, bool contrasenia_completa){
     
     
     inicializar_robots(juego->robots,contrasenia_completa,&juego->tope_robots);
-    mostrarRobots(juego->robots, juego->tope_robots);
-    //inicializar_personajes(juego->personajes,&juego->tope_personajes);
+    mostrarRobots(juego->robots, juego->tope_robots);//(*juego).tope_robots lo estoy desreferenciando y entrando al campo es decir a su contenido
+    inicializar_personajes(juego->personajes,&juego->tope_personajes);//QUITAR EL INICIALIZAR LA POSICION DE LOS PERSONAJES.PONERLO EN LAS PRECONDICIONES
+    asignar_posiciones_a_personajes(juego->personajes,juego->tope_personajes,juego->robots,juego->tope_robots);
+
+
     
 }
 

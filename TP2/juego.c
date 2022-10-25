@@ -45,6 +45,7 @@ void mostrarTablero(char matriz[20][20], int topeFila, int topeCol){
 /*
 void rotacion_lasers(coordenada_t lasers[MAX_LASERS],int tope_lasers){
     int j=1;
+    
     for (int i=0 ;i<tope_lasers;i++){
         if (i<3){
             lasers[i].fila =(lasers[i].fila+i+1);

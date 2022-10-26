@@ -33,6 +33,12 @@ void llenar(char matriz[20][20],int topeFil, int topeCol, coordenada_t coordenad
     matriz[robotCoord.fila][robotCoord.columna] = 'R'; //VER VARIABLES CAMBIARLAS
 }
 
+void llenar_personaje(char matriz[20][20],int topeFil, int topeCol,coordenada_t coordenada_personaje){
+    matriz[coordenada_personaje.fila][coordenada_personaje.columna] = 'P';
+
+
+}
+
 void mostrarTablero(char matriz[20][20], int topeFila, int topeCol){
     for(int i = 0; i < topeFila; i++){
         for(int j = 0; j< topeCol; j++){
@@ -45,7 +51,7 @@ void mostrarTablero(char matriz[20][20], int topeFila, int topeCol){
 /*
 void rotacion_lasers(coordenada_t lasers[MAX_LASERS],int tope_lasers){
     int j=1;
-    
+
     for (int i=0 ;i<tope_lasers;i++){
         if (i<3){
             lasers[i].fila =(lasers[i].fila+i+1);
@@ -120,7 +126,10 @@ int main(){
     //inicializarJuego2(tablero, 20, 20);
     inicializar_matriz(tablero,20,20);
     for (int i=0;i<4;i++){
+      //llenar(char matriz[20][20],int topeFil, int topeCol, coordenada_t coordenadas[], int topeCoord, coordenada_t robotCoord){
         llenar(tablero, 20, 20,juego.robots[i].lasers, juego.robots[i].tope_lasers, juego.robots[i].posicion);
+        llenar_personaje(tablero, 20, 20,juego.personajes[i].posicion);
+    //  llenar_personaje(char matriz[20][20],int topeFil, int topeCol,coordenada_t coordenada_personaje)
     }
     mostrarTablero(tablero, 20, 20);
     

@@ -115,7 +115,7 @@ char pregunta_tigre_de_la_princesa_jazmin(char* opcion_pregunta_tres){
         printf(" (A) Zafiro\n");
         printf(" (B) Abú\n");
         printf(" (C) Rajah\n");
-        printf(" (D) Jafar");
+        printf(" (D) Jafar\n");
         scanf(" %c",opcion_pregunta_tres);
         printf("LA RESPUESTA ES: %c",(*opcion_pregunta_tres));
     }

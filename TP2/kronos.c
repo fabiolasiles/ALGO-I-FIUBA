@@ -71,38 +71,41 @@ coordenada_t coordenada_aleatoria(int cuadrante){
  * Inicializará cada uno de los personajes,cargando la informacion correspondiente a cada personaje.
  */ 
 
-personaje_t crear_personaje(char nombre_personaje){
+personaje_t crear_personaje(char nombre_personaje,int cuadrante){
     personaje_t personaje;
     if (nombre_personaje == ELASTIC_GIRL){
+
         personaje.poder_activado = false;
         personaje.tiene_supertraje = false;
         personaje.movimientos = MOV_INICIALES_ELASTIC;
         personaje.movimientos_con_poder = MOV_PODER_ELASTIC;
         personaje.cuadrante_inicial = CUADRANTE_ELASTIC;
-        personaje.posicion = coordenada_aleatoria(PRIMER_CUADRANTE);
+        //personaje.posicion = coordenada_aleatoria(cuadrante);
 
 
     }else if (nombre_personaje == VIOLETA){
+        
         personaje.poder_activado = false;
         personaje.tiene_supertraje = false;
         personaje.movimientos = MOV_INICIALES_VIOLETA;
         personaje.movimientos_con_poder = MOV_PODER_VIOLETA;
         personaje.cuadrante_inicial = CUADRANTE_VIOLETA;
-        personaje.posicion = coordenada_aleatoria(SEGUNDO_CUADRANTE);
+        //personaje.posicion = coordenada_aleatoria(cuadrante);
     }else if(nombre_personaje == DASH){
+
         personaje.poder_activado = false;
         personaje.tiene_supertraje = false;
         personaje.movimientos = MOV_INICIALES_DASH;
         personaje.movimientos_con_poder = MOV_PODER_DASH;
         personaje.cuadrante_inicial = CUADRANTE_DASH;
-        personaje.posicion = coordenada_aleatoria(TERCER_CUADRANTE);
+        //personaje.posicion = coordenada_aleatoria(cuadrante);
     }else {
         personaje.poder_activado = false;
         personaje.tiene_supertraje = false;
         personaje.movimientos = MOV_INICIALES_MR_INCREIBLE;
         personaje.movimientos_con_poder = MOV_PODER_MR_INCREIBLE;
         personaje.cuadrante_inicial = CUADRANTE_MR_INCREIBLE;
-        personaje.posicion = coordenada_aleatoria(CUARTO_CUADRANTE);//REVISAR LOS CUADRANTESDE LOS PERSONJES 
+        //personaje.posicion = coordenada_aleatoria(cuadrante);//REVISAR LOS CUADRANTESDE LOS PERSONJES 
 
     }
     return personaje;
@@ -155,20 +158,13 @@ void inicializar_personajes(personaje_t personajes[MAX_PERSONAJES],int* tope_per
     personajes[(*tope_personajes)] = crear_personaje(ELASTIC_GIRL,PRIMER_CUADRANTE);
     (*tope_personajes)++;
     
-    personajes[(*tope_personajes)] = crear_personaje(VIOLETA,SEGUNDO_CUADRANTE);
+    personajes[(*tope_personajes)] = crear_personaje(VIOLETA,CUARTO_CUADRANTE);
     (*tope_personajes)++;
     personajes[(*tope_personajes)] = crear_personaje(DASH,TERCER_CUADRANTE);
     (*tope_personajes)++;
-    personajes[(*tope_personajes)] = crear_personaje(MR_INCREIBLE,CUARTO_CUADRANTE);
-  
-
-
-   
-
+    personajes[(*tope_personajes)] = crear_personaje(MR_INCREIBLE,SEGUNDO_CUADRANTE);
 
 }
-
-*/
 
 /*
  * funcion que elige la forma que se llenara el laser
@@ -360,23 +356,50 @@ void mostrarRobots(robot_t robots[MAX_ROBOTS], int topeRobot){
     
 }
 //validar coordenada me devuelve true sino encontrò ninguna coordena igual
+bool validar_coordenada(coordenada_t lasers[MAX_LASERS], int tope_lasers,coordenada_t posicion_del_robot,coordenada_t coordenada_aleatoria_personaje){
+    bool encontrado = false;
+    int i = -1;
+        if (coordenada_aleatoria_personaje.fila == posicion_del_robot.fila && coordenada_aleatoria_personaje.columna==posicion_del_robot.columna){    
+            encontrado = true;
+            
+        }else{
+            while((!encontrado)&& (i<tope_lasers-1)){
+                if((coordenada_aleatoria_personaje.fila == lasers[i+1].fila)&&(coordenada_aleatoria_personaje.columna == lasers[i+1].columna)){
+                    encontrado = true;
+                }
+                i++;
+            }
+        }
+        printf("******************************* NO  ES IGUAL************************************************ \n");
+
+    return encontrado;
+}
+
 /*
 * Asigna una coordenada valida a cada personaje.
 */
-coordenada_t  obtener_posicion_personaje(coordenada_t lasers[MAX_LASERS],int tope_lasers,coordenada_t posicion_del_robot){
+coordenada_t  obtener_posicion_personaje(coordenada_t lasers[MAX_LASERS],int tope_lasers,coordenada_t posicion_del_robot, int cuadrante){
         
-        coordena_t coordenada_aleatoria_personaje = coordenada_aleatoria()//recibir por parametro el cuadrante
+        coordenada_t coordenada_aleatoria_personaje = coordenada_aleatoria(cuadrante);//recibir por parametro el cuadrante
+       
+        printf("LA COORDENADA DEL PERSONAJE ES (%i,%i)  \n",coordenada_aleatoria_personaje.fila,coordenada_aleatoria_personaje.columna);
         bool encontrado = false;
         while(!encontrado){
+            
             if(validar_coordenada(lasers,tope_lasers,posicion_del_robot,coordenada_aleatoria_personaje)){
-                encontrado = true;
-            }else{
                 //llamo de vuelta porque se encontrò nuevamente
+                coordenada_aleatoria_personaje = coordenada_aleatoria(cuadrante);
+                
+            }else{
+                
+                encontrado = true;
+                
             }
 
         }
+        
 
-        return coordenada_aleatoria_personaje;
+    return coordenada_aleatoria_personaje;
 
 }
 
@@ -387,8 +410,10 @@ coordenada_t  obtener_posicion_personaje(coordenada_t lasers[MAX_LASERS],int top
 
 void asignar_posiciones_a_personajes(personaje_t personajes[MAX_PERSONAJES],int tope_personajes,robot_t robots[MAX_ROBOTS],int tope_robots){
     
-    for(int i =0;i<tope_personajes;i++){
-        personajes[i] = obtener_posicion_personaje(robots[i].lasers, robots[i].tope_lasers,robots[i].posicion);
+    for(int i =0;i<=tope_personajes;i++){
+        int cuadrante= i+1;
+
+        personajes[i].posicion = obtener_posicion_personaje(robots[i].lasers, robots[i].tope_lasers,robots[i].posicion,cuadrante);
     }
     
 }

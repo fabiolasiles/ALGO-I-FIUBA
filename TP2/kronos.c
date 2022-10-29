@@ -355,7 +355,10 @@ void mostrarRobots(robot_t robots[MAX_ROBOTS], int topeRobot){
     }
     
 }
-//validar coordenada me devuelve true sino encontrò ninguna coordena igual
+
+
+
+//validar coordenada me devuelve TRUE si encontrò ninguna coordena igual a la posicion del robot o a la de los laser
 bool validar_coordenada(coordenada_t lasers[MAX_LASERS], int tope_lasers,coordenada_t posicion_del_robot,coordenada_t coordenada_aleatoria_personaje){
     bool encontrado = false;
     int i = -1;
@@ -418,21 +421,197 @@ void asignar_posiciones_a_personajes(personaje_t personajes[MAX_PERSONAJES],int 
     
 }
 
+//_______________________________________________________________________________________________________________________
+//    ---------------------------INICIALIZACION supertrajes-------------------------
+
+
+bool validar_coordenada_supertraje(coordenada_t lasers[MAX_LASERS], int tope_lasers,coordenada_t posicion_del_robot,coordenada_t posicion_del_personaje,coordenada_t coordenada_aleatoria_personaje){
+    bool encontrado = false;
+    int i = -1;
+        if (coordenada_aleatoria_personaje.fila == posicion_del_robot.fila && coordenada_aleatoria_personaje.columna==posicion_del_robot.columna){    
+            encontrado = true;
+            
+        }else if(coordenada_aleatoria_personaje.fila == posicion_del_personaje.fila && coordenada_aleatoria_personaje.columna==posicion_del_personaje.columna){    
+            encontrado = true;
+
+        }
+        else{
+            while((!encontrado)&& (i<tope_lasers-1)){
+                if((coordenada_aleatoria_personaje.fila == lasers[i+1].fila)&&(coordenada_aleatoria_personaje.columna == lasers[i+1].columna)){
+                    encontrado = true;
+                }
+                i++;
+            }
+        }
+        printf("******************************* NO  ES IGUAL************************************************ \n");
+
+    return encontrado;
+}
+
+
+coordenada_t obtener_posicion_supertrajes(coordenada_t lasers[MAX_LASERS],int tope_lasers,coordenada_t posicion_del_robot,int cuadrante,coordenada_t posicion_del_personaje){
+    coordenada_t coordenada_aleatoria_personaje = coordenada_aleatoria(cuadrante);//recibir por parametro el cuadrante
+       
+        printf("LA COORDENADA DEL SUPERTRAJEES (%i,%i)  \n",coordenada_aleatoria_personaje.fila,coordenada_aleatoria_personaje.columna);
+        bool encontrado = false;
+        while(!encontrado){
+            
+            if(validar_coordenada_supertraje(lasers,tope_lasers,posicion_del_robot,posicion_del_personaje,coordenada_aleatoria_personaje)){
+                //llamo de vuelta porque se encontrò nuevamente
+                coordenada_aleatoria_personaje = coordenada_aleatoria(cuadrante);
+                
+            }else{
+                
+                encontrado = true;
+                
+            }
+
+        }
+        
+
+    return coordenada_aleatoria_personaje;
+
+}
+
+
+void  asignar_posiciones_a_supertrajes(supertraje_t supertrajes[MAX_SUPERTRAJES],int tope_supertraje,personaje_t personajes[MAX_PERSONAJES],int tope_personajes,robot_t robots[MAX_ROBOTS],int tope_robots){
+    for(int i =0;i<=tope_supertraje;i++){
+        int cuadrante= i+1;
+
+        supertrajes[i].posicion = obtener_posicion_supertrajes(robots[i].lasers, robots[i].tope_lasers,robots[i].posicion,cuadrante, personajes[i].posicion);
+    }
+
+}
+
+
+
+
+
+
+/*
+ * procedimiento que llena los supertrajes
+ */
+
+
+
+supertraje_t obtener_supertraje(int cuadrante){
+    supertraje_t supertraje;
+    if(cuadrante == PRIMER_CUADRANTE){
+        supertraje.cuadrante = PRIMER_CUADRANTE;
+        supertraje.recolectado = false;
+        supertraje.usado = false;
+    }else if (cuadrante == SEGUNDO_CUADRANTE){
+        supertraje.cuadrante = SEGUNDO_CUADRANTE;
+        supertraje.recolectado = false;
+        supertraje.usado = false;
+    }else if(cuadrante == TERCER_CUADRANTE){
+        supertraje.cuadrante = TERCER_CUADRANTE;
+        supertraje.recolectado = false;
+        supertraje.usado = false;
+    }else if(cuadrante == CUARTO_CUADRANTE){
+        supertraje.cuadrante = CUARTO_CUADRANTE;
+        supertraje.recolectado = false;
+        supertraje.usado = false;
+    }
+    return supertraje;
+
+}
+
+
+
+/*
+*fucion que incializa  un vector de 4 supertrajes.
+*/
+void incializar_supertrajes(supertraje_t supertrajes[MAX_SUPERTRAJES],int* tope_supertraje){
+    (*tope_supertraje)=0;
+    
+    int cuadrante = 1;
+    for(int i = 0; i < 4; i++){
+        supertrajes[i] = obtener_supertraje(cuadrante);
+        cuadrante++;
+        (*tope_supertraje)++;
+    }
+}
+
+
+
+//_______________________________________________________________________________________________________________________
+//    --------------------------------------------INICIALIZAR PINZAS-----------------------
+/*
+ * funcion para asignar una coordenada valida al vector pinzas
+ */
+coordenada_t validar_coordenada_pinzas(coordenada_t pinzas[MAX_PINZAS],int* tope_pinzas,int cuadrante, coordenada_t lasers[MAX_LASERS], int tope_lasers,coordenada_t posicion_del_robot,coordenada_t posicion_del_personaje,coordenada_t coordenada_aleatoria_personaje){
+    //validar elementos_cuadrantes realiza la validacion de la coodenada aleatoria
+    //con los elementos  de todos los elementos de un cuadrante
+    //validar_pinzas   verifica que  el elemento de la coordenada_aleatoria no este en el vector de las pinzas en el caso que 
+    //este pide nuevamente la coordenda y en el caso de que no se lo asigna al vector pinzas.
+    while(validar_elementos_cuadrante)&&(validar_){
+        coordenada_t coordenada_aleatoria_pinzas = coordenada_aleatoria(cuadrante);
+        
+
+    }
+    
+     
+    
+    
+
+
+
+
+
+
+}
+
+
+void inicializar_pinzas(coordenada_t pinzas[MAX_PINZAS],int* tope_pinzas,robot_t robots[MAX_ROBOTS],int tope_robots,personaje_t personajes[MAX_PERSONAJES],int tope_personajes){
+    coordenada_t vector_pinzas[MAX_PINZAS];
+    (*tope_pinzas) = 0;
+    int i = 0; 
+    while(i<16){
+        if(i<4){
+            pinzas[i]= validar_coordenada_pinzas(pinzas,&tope_pinzas,PRIMER_CUADRANTE);//devuelve una coordenada valida
+            (*tope_pinzas)++
+            contador++;
+
+        }else if(i<8){
+            pinzas[i]= validar_coordenada_pinzas(SEGUNDO_CUADRANTE);//devuelve una coordenada valida
+            (*tope_pinzas)++;
+            contador++;
+
+        }else if(i<12){
+            pinzas[i]= validar_coordenada_pinzas(TERCER_CUADRANTE);//devuelve una coordenada valida
+            (*tope_pinzas)++;
+            contador++;
+
+        }else if(i<16){
+            pinzas[i]= validar_coordenada_pinzas(CUARTO_CUADRANTE);//devuelve una coordenada valida
+            (*tope_pinzas)++;
+            contador++;
+        }
+
+    }
+}
+
+
+
+
+//    -------------------------------------------------------------------------
+//_______________________________________________________________________________________________________________________
+
 
 /*
  * Inicializará el juego, cargando toda la información inicial de los robots, los supertrajes, el personaje, los lásers y las pinzas.
  * El campo id_personaje_actual comienza en 1.
  */ 
 void inicializar_juego(juego_t* juego, bool contrasenia_completa){
-
-    
-    
     inicializar_robots(juego->robots,contrasenia_completa,&juego->tope_robots);
     mostrarRobots(juego->robots, juego->tope_robots);//(*juego).tope_robots lo estoy desreferenciando y entrando al campo es decir a su contenido
     inicializar_personajes(juego->personajes,&juego->tope_personajes);//QUITAR EL INICIALIZAR LA POSICION DE LOS PERSONAJES.PONERLO EN LAS PRECONDICIONES
     asignar_posiciones_a_personajes(juego->personajes,juego->tope_personajes,juego->robots,juego->tope_robots);
-
-
-    
+    incializar_supertrajes(juego->supertrajes,&juego->tope_supertraje);
+    asignar_posiciones_a_supertrajes(juego->supertrajes,juego->tope_supertraje,juego->personajes,juego->tope_personajes,juego->robots,juego->tope_robots);
+    //asignar_posiciones_a_personajes(juego->personajes,juego->tope_personajes,juego->robots,juego->tope_robots);
+    inicializar_pinzas(juego->pinzas,&juego->tope_pinzas,juego->robots,juego->tope_robots,juego->personajes,juego->tope_personajes);
+   
 }
 

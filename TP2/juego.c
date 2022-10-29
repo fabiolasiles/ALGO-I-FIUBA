@@ -27,7 +27,9 @@ void inicializar_matriz(char matriz[20][20], int fila, int col){
 void llenar(char matriz[20][20],int topeFil, int topeCol, coordenada_t coordenadas[], int topeCoord, coordenada_t robotCoord){
     for(int i = 0; i < topeCoord; i++){
         if(coordenadas[i].fila >= 0 && coordenadas[i].columna >= 0 && coordenadas[i].fila <=19 && coordenadas[i].columna<=19){
-            matriz[coordenadas[i].fila][coordenadas[i].columna] = 'L';
+           if (matriz[coordenadas[i].fila][coordenadas[i].columna] != 'R'){ //VERIFICAR SI ES EL IF  QUE ME FALTABA
+                matriz[coordenadas[i].fila][coordenadas[i].columna] = 'L';
+           }
         }
     }
     matriz[robotCoord.fila][robotCoord.columna] = 'R'; //VER VARIABLES CAMBIARLAS
@@ -95,11 +97,8 @@ int main(){
     char contrasenia_adivinada[MAX_CONTRASENIA];
     
     adivinar_contrasenia(contrasenia_adivinada);
-    printf("LINEA 65");
-     
-    
     bool contrasenia_completa = validar_contrasenia(contrasenia_adivinada);
-   printf("LINEA 69");
+    
 
     juego_t juego;
     printf("SE DESCUBRIO LA CONTRASEÑA");

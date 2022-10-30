@@ -36,8 +36,18 @@ void llenar(char matriz[20][20],int topeFil, int topeCol, coordenada_t coordenad
 }
 
 void llenar_personaje(char matriz[20][20],int topeFil, int topeCol,coordenada_t coordenada_personaje){
-    matriz[coordenada_personaje.fila][coordenada_personaje.columna] = 'P';
+    matriz[coordenada_personaje.fila][coordenada_personaje.columna] = 'E';
 
+
+}
+
+void llenar_supertraje(char matriz[20][20],int topeFil, int topeCol,coordenada_t coordenada_supertraje){
+    matriz[coordenada_supertraje.fila][coordenada_supertraje.columna] = 'S';
+
+}
+
+void llenar_pinzas(char matriz[20][20],int topeFil, int topeCol,coordenada_t coordenada_pinzas){
+    matriz[coordenada_pinzas.fila][coordenada_pinzas.columna] = 'P';
 
 }
 
@@ -128,8 +138,14 @@ int main(){
       //llenar(char matriz[20][20],int topeFil, int topeCol, coordenada_t coordenadas[], int topeCoord, coordenada_t robotCoord){
         llenar(tablero, 20, 20,juego.robots[i].lasers, juego.robots[i].tope_lasers, juego.robots[i].posicion);
         llenar_personaje(tablero, 20, 20,juego.personajes[i].posicion);
-    //  llenar_personaje(char matriz[20][20],int topeFil, int topeCol,coordenada_t coordenada_personaje)
+        llenar_supertraje(tablero, 20, 20,juego.supertrajes[i].posicion);
+    
     }
+    for (int i=0;i<16;i++){
+        llenar_pinzas(tablero, 20, 20,juego.pinzas[i]);
+
+    }
+    
     mostrarTablero(tablero, 20, 20);
     
     /*coordenada_t lasers[6] = {coordenada_laser_uno,coordenada_laser_dos,coordenada_laser_tres,coordenada_laser_cua,coordenada_laser_cinco,coordenada_laser_seis};

@@ -537,56 +537,154 @@ void incializar_supertrajes(supertraje_t supertrajes[MAX_SUPERTRAJES],int* tope_
 
 //_______________________________________________________________________________________________________________________
 //    --------------------------------------------INICIALIZAR PINZAS-----------------------
+ 
+
+
+
+bool validar_pos_en_cuadrante(coordenada_t pos_aleatoria_de_una_pinza,int cuadrante, coordenada_t lasers[MAX_LASERS], int tope_lasers,coordenada_t posicion_del_robot,coordenada_t posicion_del_personaje,coordenada_t posicion_del_supertraje){
+
+
+    bool encontrado = false;
+    int i = -1;
+        if (pos_aleatoria_de_una_pinza.fila == posicion_del_robot.fila && pos_aleatoria_de_una_pinza.columna==posicion_del_robot.columna){    
+            encontrado = true;
+            
+        }else if(pos_aleatoria_de_una_pinza.fila == posicion_del_personaje.fila && pos_aleatoria_de_una_pinza.columna==posicion_del_personaje.columna){    
+            encontrado = true;
+
+        }else if(pos_aleatoria_de_una_pinza.fila == posicion_del_supertraje.fila && pos_aleatoria_de_una_pinza.columna==posicion_del_supertraje.columna){    
+            encontrado = true;
+
+        }
+        else{
+            while((!encontrado)&& (i<tope_lasers-1)){
+                if((pos_aleatoria_de_una_pinza.fila == lasers[i+1].fila)&&(pos_aleatoria_de_una_pinza.columna == lasers[i+1].columna)){
+                    encontrado = true;
+                }
+                i++;
+            }
+        }
+        printf("******************************* NO  ES IGUAL************************************************ \n");
+
+    return encontrado;
+}
+
+
+
+bool validar_pos_en_pinzas(coordenada_t pos_aleatoria_de_una_pinza,coordenada_t pinzas[MAX_PINZAS],int tope_pinzas){
+    bool esta_en_pinzas= false;
+    if ((tope_pinzas)== 0){
+        esta_en_pinzas= false;
+        
+    }else{
+        while(((tope_pinzas>=1))){
+            if((pos_aleatoria_de_una_pinza.fila == pinzas[tope_pinzas-1].fila)&&(pos_aleatoria_de_una_pinza.columna == pinzas[tope_pinzas-1].columna)){
+                esta_en_pinzas= true;
+            }else{
+                esta_en_pinzas= false;
+            }
+        }
+        tope_pinzas--;
+    }
+    return esta_en_pinzas;
+}
+
+    /*}else if ((tope_pinzas)== 1){
+
+        if((pos_aleatoria_de_una_pinza.fila == pinzas[0].fila)&&(pos_aleatoria_de_una_pinza.columna == pinzas[0].columna)){
+            esta_en_pinzas= true;
+        }else{
+            esta_en_pinzas= false;
+        }
+    }else if((tope_pinzas)== 2){
+        if((pos_aleatoria_de_una_pinza.fila == pinzas[1].fila)&&(pos_aleatoria_de_una_pinza.columna == pinzas[1].columna)){
+            esta_en_pinzas= true;
+        }else{
+            esta_en_pinzas= false;
+        }
+
+    }else if((tope_pinzas)== 3){
+        if((pos_aleatoria_de_una_pinza.fila == pinzas[3].fila)&&(pos_aleatoria_de_una_pinza.columna == pinzas[3].columna)){
+            esta_en_pinzas= true;
+        }else{
+            esta_en_pinzas= false;
+        }
+    return esta_en_pinzas;
+
+}*/
+
+/* while((tope_pinzas)<= 1){
+    if((pos_aleatoria_de_una_pinza.fila == pinzas[tope_pinzas-1].fila)&&(pos_aleatoria_de_una_pinza.columna == pinzas[tope_pinzas-1].columna)){
+            esta_en_pinzas= true;
+    }else{
+            esta_en_pinzas= false;
+    }
+    tope_pinzas--;
+
+
+}
+*/
+
+
+
 /*
  * funcion para asignar una coordenada valida al vector pinzas
  */
-coordenada_t validar_coordenada_pinzas(coordenada_t pinzas[MAX_PINZAS],int* tope_pinzas,int cuadrante, coordenada_t lasers[MAX_LASERS], int tope_lasers,coordenada_t posicion_del_robot,coordenada_t posicion_del_personaje,coordenada_t coordenada_aleatoria_personaje){
+
+coordenada_t validar_coordenada_pinzas(coordenada_t pinzas[MAX_PINZAS],int tope_pinzas,int cuadrante, coordenada_t lasers[MAX_LASERS], int tope_lasers,coordenada_t posicion_del_robot,coordenada_t posicion_del_personaje,coordenada_t posicion_del_supertraje){
     //validar elementos_cuadrantes realiza la validacion de la coodenada aleatoria
     //con los elementos  de todos los elementos de un cuadrante
     //validar_pinzas   verifica que  el elemento de la coordenada_aleatoria no este en el vector de las pinzas en el caso que 
     //este pide nuevamente la coordenda y en el caso de que no se lo asigna al vector pinzas.
-    while(validar_elementos_cuadrante)&&(validar_){
-        coordenada_t coordenada_aleatoria_pinzas = coordenada_aleatoria(cuadrante);
+    
+    coordenada_t pos_aleatoria_de_una_pinza = coordenada_aleatoria(cuadrante);
+    bool es_valido = false;
+    while(!(es_valido)){
         
+        
+        bool se_encontro_en_elementos_cuadrante=validar_pos_en_cuadrante(pos_aleatoria_de_una_pinza,cuadrante,lasers,tope_lasers,posicion_del_robot,posicion_del_personaje, posicion_del_supertraje);
+        bool se_encontro_en_vector_pinzas= validar_pos_en_pinzas(pos_aleatoria_de_una_pinza,pinzas,tope_pinzas);
+        //bool se_encontro_en_vector_pinzas = false;
 
+        if((se_encontro_en_elementos_cuadrante ==false )&&(se_encontro_en_vector_pinzas ==false)){
+            es_valido = true;
+            
+        }else{
+            
+            pos_aleatoria_de_una_pinza = coordenada_aleatoria(cuadrante);
+        }
     }
+    return pos_aleatoria_de_una_pinza;
     
-     
-    
-    
-
-
-
-
-
-
 }
 
-
-void inicializar_pinzas(coordenada_t pinzas[MAX_PINZAS],int* tope_pinzas,robot_t robots[MAX_ROBOTS],int tope_robots,personaje_t personajes[MAX_PERSONAJES],int tope_personajes){
-    coordenada_t vector_pinzas[MAX_PINZAS];
+void inicializar_pinzas(coordenada_t pinzas[MAX_PINZAS],int* tope_pinzas,robot_t robots[MAX_ROBOTS],int tope_robots,personaje_t personajes[MAX_PERSONAJES],int tope_personajes,supertraje_t supertrajes[MAX_SUPERTRAJES],int tope_supertrajes){
+    //coordenada_t vector_pinzas[MAX_PINZAS];
     (*tope_pinzas) = 0;
     int i = 0; 
     while(i<16){
-        if(i<4){
-            pinzas[i]= validar_coordenada_pinzas(pinzas,&tope_pinzas,PRIMER_CUADRANTE);//devuelve una coordenada valida
-            (*tope_pinzas)++
-            contador++;
+        if(i<4){ 
+        
+            pinzas[i]= validar_coordenada_pinzas(pinzas,(*tope_pinzas),PRIMER_CUADRANTE,robots[0].lasers,robots[0].tope_lasers,robots[0].posicion,personajes[0].posicion,supertrajes[0].posicion);//devuelve una coordenada valida
+           
+            
+            (*tope_pinzas)=(*tope_pinzas)+1;
+            i++;
 
         }else if(i<8){
-            pinzas[i]= validar_coordenada_pinzas(SEGUNDO_CUADRANTE);//devuelve una coordenada valida
-            (*tope_pinzas)++;
-            contador++;
+            pinzas[i]= validar_coordenada_pinzas(pinzas,(*tope_pinzas),SEGUNDO_CUADRANTE,robots[1].lasers,robots[1].tope_lasers,robots[1].posicion,personajes[1].posicion,supertrajes[1].posicion);
+            (*tope_pinzas)=(*tope_pinzas)+1;
+            i++;
 
         }else if(i<12){
-            pinzas[i]= validar_coordenada_pinzas(TERCER_CUADRANTE);//devuelve una coordenada valida
-            (*tope_pinzas)++;
-            contador++;
+            pinzas[i]= validar_coordenada_pinzas(pinzas,(*tope_pinzas),TERCER_CUADRANTE,robots[2].lasers,robots[2].tope_lasers,robots[2].posicion,personajes[2].posicion,supertrajes[2].posicion);
+            (*tope_pinzas)=(*tope_pinzas)+1;
+            i++;
 
         }else if(i<16){
-            pinzas[i]= validar_coordenada_pinzas(CUARTO_CUADRANTE);//devuelve una coordenada valida
-            (*tope_pinzas)++;
-            contador++;
+            pinzas[i]= validar_coordenada_pinzas(pinzas,(*tope_pinzas),CUARTO_CUADRANTE,robots[3].lasers,robots[3].tope_lasers,robots[3].posicion,personajes[3].posicion,supertrajes[3].posicion);
+            (*tope_pinzas)=(*tope_pinzas)+1;
+            i++;
         }
 
     }
@@ -597,6 +695,9 @@ void inicializar_pinzas(coordenada_t pinzas[MAX_PINZAS],int* tope_pinzas,robot_t
 
 //    -------------------------------------------------------------------------
 //_______________________________________________________________________________________________________________________
+
+
+
 
 
 /*
@@ -611,7 +712,5 @@ void inicializar_juego(juego_t* juego, bool contrasenia_completa){
     incializar_supertrajes(juego->supertrajes,&juego->tope_supertraje);
     asignar_posiciones_a_supertrajes(juego->supertrajes,juego->tope_supertraje,juego->personajes,juego->tope_personajes,juego->robots,juego->tope_robots);
     //asignar_posiciones_a_personajes(juego->personajes,juego->tope_personajes,juego->robots,juego->tope_robots);
-    inicializar_pinzas(juego->pinzas,&juego->tope_pinzas,juego->robots,juego->tope_robots,juego->personajes,juego->tope_personajes);
-   
+    inicializar_pinzas(juego->pinzas,&juego->tope_pinzas,juego->robots,juego->tope_robots,juego->personajes,juego->tope_personajes,juego->supertrajes,juego->tope_supertraje);
 }
-

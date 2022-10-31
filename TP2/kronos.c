@@ -223,48 +223,73 @@ void cargar_tipo_laser_aleatorio(int forma_de_laser_aleatorio,int tope_lasers,co
         switch(forma_de_laser_aleatorio){
             case ARRIBA_DERECHA:
                 if (i<longitud_lasers){
-                    lasers[i].fila = posicion_del_robot.fila -j;
-                    lasers[i].columna = posicion_del_robot.columna;
+                    //lasers[i].fila = posicion_del_robot.fila -j;
+                    //lasers[i].columna = posicion_del_robot.columna;
                     
+                    //j++;
+                    lasers[i].fila = posicion_del_robot.fila;
+                    lasers[i].columna = posicion_del_robot.columna+j;
                     j++;
                 }else{
-                    lasers[i].columna = posicion_del_robot.columna+k;
-                    lasers[i].fila = posicion_del_robot.fila;
+                    //lasers[i].columna = posicion_del_robot.columna+k;
+                    //lasers[i].fila = posicion_del_robot.fila;
+                    //k++;
+                    lasers[i].fila = posicion_del_robot.fila+k;
+                    lasers[i].columna = posicion_del_robot.columna;
                     k++;
                 }
                 break;   
             case ARRIBA_IZQUIERDA:
                 if (i<longitud_lasers){
-                    lasers[i].columna = posicion_del_robot.columna-k;
-                    lasers[i].fila = posicion_del_robot.fila;
-                    k++;
+                    //lasers[i].columna = posicion_del_robot.columna-k;
+                    //lasers[i].fila = posicion_del_robot.fila;
+                    //k++;
+                    lasers[i].fila = posicion_del_robot.fila+j;
+                    lasers[i].columna = posicion_del_robot.columna;
+                    j++;
                     
                 }else{
-                    lasers[i].fila=posicion_del_robot.fila-j;
-                    lasers[i].columna=posicion_del_robot.columna;
-                    j++;
+                    //lasers[i].fila=posicion_del_robot.fila-j;
+                    //lasers[i].columna=posicion_del_robot.columna;
+                    //j++;
+                    lasers[i].fila = posicion_del_robot.fila;
+                    lasers[i].columna = posicion_del_robot.columna-k;
+                    k++;
                 }
                 break;
             case ABAJO_DERECHA:
                 if (i<longitud_lasers){
-                    lasers[i].columna=posicion_del_robot.columna+k;
-                    lasers[i].fila =posicion_del_robot.fila;
-                    k++;
-                }else{
-                    lasers[i].columna =posicion_del_robot.columna;
-                    lasers[i].fila =posicion_del_robot.fila+j;
+                    //lasers[i].columna=posicion_del_robot.columna+k;
+                    //lasers[i].fila =posicion_del_robot.fila;
+                    //k++;
+                    lasers[i].fila = posicion_del_robot.fila;
+                    lasers[i].columna = posicion_del_robot.columna-j;
+                    
                     j++;
+                }else{
+                    //lasers[i].columna =posicion_del_robot.columna;
+                    //lasers[i].fila =posicion_del_robot.fila+j;
+                    //j++;
+                    lasers[i].fila = posicion_del_robot.fila-k;
+                    lasers[i].columna = posicion_del_robot.columna;
+                    k++;
                 }
                 break;
             default:
                 if (i<longitud_lasers){
-                    lasers[i].columna =posicion_del_robot.columna;
-                    lasers[i].fila =posicion_del_robot.fila+j;
+                    //lasers[i].columna =posicion_del_robot.columna;
+                    //lasers[i].fila =posicion_del_robot.fila+j;
+                    //j++;
+                    lasers[i].fila = posicion_del_robot.fila-j;
+                    lasers[i].columna = posicion_del_robot.columna;
                     j++;
                    
                 }else{
-                    lasers[i].columna = posicion_del_robot.columna-k;
+                    //lasers[i].columna = posicion_del_robot.columna-k;
+                    //lasers[i].fila = posicion_del_robot.fila;
+                    //k++;
                     lasers[i].fila = posicion_del_robot.fila;
+                    lasers[i].columna = posicion_del_robot.columna+k;
                     k++;
                 break;
                 }
@@ -569,7 +594,7 @@ bool validar_pos_en_cuadrante(coordenada_t pos_aleatoria_de_una_pinza,int cuadra
     return encontrado;
 }
 
-
+/*
 
 bool validar_pos_en_pinzas(coordenada_t pos_aleatoria_de_una_pinza,coordenada_t pinzas[MAX_PINZAS],int tope_pinzas){
     bool esta_en_pinzas= false;
@@ -587,7 +612,7 @@ bool validar_pos_en_pinzas(coordenada_t pos_aleatoria_de_una_pinza,coordenada_t 
         tope_pinzas--;
     }
     return esta_en_pinzas;
-}
+}*/
 
     /*}else if ((tope_pinzas)== 1){
 
@@ -643,8 +668,8 @@ coordenada_t validar_coordenada_pinzas(coordenada_t pinzas[MAX_PINZAS],int tope_
         
         
         bool se_encontro_en_elementos_cuadrante=validar_pos_en_cuadrante(pos_aleatoria_de_una_pinza,cuadrante,lasers,tope_lasers,posicion_del_robot,posicion_del_personaje, posicion_del_supertraje);
-        bool se_encontro_en_vector_pinzas= validar_pos_en_pinzas(pos_aleatoria_de_una_pinza,pinzas,tope_pinzas);
-        //bool se_encontro_en_vector_pinzas = false;
+        //bool se_encontro_en_vector_pinzas= validar_pos_en_pinzas(pos_aleatoria_de_una_pinza,pinzas,tope_pinzas);
+        bool se_encontro_en_vector_pinzas = false;
 
         if((se_encontro_en_elementos_cuadrante ==false )&&(se_encontro_en_vector_pinzas ==false)){
             es_valido = true;

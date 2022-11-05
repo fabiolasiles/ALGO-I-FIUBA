@@ -18,6 +18,7 @@ void inicializar_juego(juego_t* juego, bool contrasenia_completa){
     asignarPosSuperTraje(juego->supertrajes, juego->tope_supertraje, coordenadas, &tope);
 
     asignarPosPinzas(juego->pinzas, &juego->tope_pinzas, coordenadas, &tope);
+    juego->id_personaje_actual = 1;
     
 
 
@@ -78,14 +79,19 @@ int estado_juego(juego_t juego){
 
 void realizar_jugada(juego_t* juego, char movimiento){
     int indicePersonaje = obtenerIndicePersonajeActual(juego->id_personaje_actual,juego->personajes,juego->tope_personajes);
+
+    printf("----------------------------TERRENO SIN MOVER EL PERSONAJE-----------\n");
+    imprimir_terreno(*juego);
      //ROTAR EL LASERS
     if(movimiento =='C'){
         printf("---");
         
     }else if( moverPersonaje(juego->id_personaje_actual,juego->personajes,juego->tope_personajes,movimiento)){
-       //rotarLaser();
-//seUsaPoder(movimiento,(*juego))
+        printf("----------------------------TERRENO LUEGO DE MOVER EL PERSONAJE-----------\n");
+        imprimir_terreno(*juego);
+        printf("-------------Muevo el Personaje\n");
         if(true){
+            printf("---------vacio luego de movel el personaje-\n");
         //1-SE USA EL PODER 
         }else if(estaEnElPersonajeSiguiente(juego->personajes,juego->tope_personajes,indicePersonaje)){
             juego->id_personaje_actual ++; 

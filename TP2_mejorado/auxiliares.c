@@ -616,6 +616,7 @@ bool EstaEnLaMatriz(coordenada_t posNueva){
  * es mayor que cero y que siempre habra un personaje con el id valido.
  */
 int obtenerIndicePersonajeActual(int id, personaje_t personajes[MAX_PERSONAJES], int tope){
+
 	int i = 0;
 	bool encontrado= false;
 	while (!(encontrado) && i < tope){
@@ -635,9 +636,13 @@ int obtenerIndicePersonajeActual(int id, personaje_t personajes[MAX_PERSONAJES],
  * Si movio el personaje correctamente devuelve  true sino false
  */
 bool moverPersonaje(int idPersonajeActual,personaje_t personajes[MAX_PERSONAJES],int tope_personajes,char opcion){
-	bool estado = false;
+   bool estado = false;
+   printf("----------------------ID PERSONAJE ACTUAL : %i\n", idPersonajeActual);
    int indicePersonaje = obtenerIndicePersonajeActual(idPersonajeActual, personajes, tope_personajes);
+   printf("el indice actual es : %i\n", indicePersonaje);
    coordenada_t posNueva = obtenerCoordenadaDelMovimiento(personajes[indicePersonaje].posicion,opcion);
+   printf("-------------la nueva coordenada--------\n");
+   mostrarCoordenada(posNueva);
 
     if(EstaEnLaMatriz(posNueva)){
         personajes[indicePersonaje].posicion = posNueva; 

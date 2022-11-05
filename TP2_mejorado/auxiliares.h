@@ -23,7 +23,7 @@
 #define MOV_INICIALES_ELASTIC 25
 #define MOV_PODER_ELASTIC 3
 #define CUADRANTE_ELASTIC 1
-#define MAX_ALTO 20 // nose si irian estos margenes ya que van a  ir cambiando constantemente.
+#define MAX_ALTO 20 
 #define MAX_ANCHO 20
 
 #define MAX 30
@@ -63,6 +63,16 @@
 #define SE_PIERDE -1
 #define SE_GANA 1
 #define SE_SIGUE_JUGANDO 0
+
+#define MOVIMIENTO 1
+
+#define DERECHA 'D'
+#define IZQUIERDA 'A'
+#define ABAJO 'S'
+#define ARRIBA 'W' 
+
+#define ERROR -1
+#define EXITOSO 1
 
 
 
@@ -149,4 +159,19 @@ void llenar_lasers( coordenada_t lasers[MAX_LASERS], int tope_lasers,coordenada_
 void inicializar_robots(robot_t robots[MAX_ROBOTS], bool contrasenia_completa, int* tope_robots);
 robot_t crear_robot(bool contrasenia_completa, int cuadrante);
 
+//--------------------------------------------------------------FUNCIONES REALIZAR JUGADA-----------------------------------------------------------------------
+int obtenerCuadrante(coordenada_t coordenada);
+coordenada_t obtenerCoordenadaDelMovimiento(coordenada_t posDelPersonaje, char opcion);
+bool EstaEnLaMatriz(coordenada_t posNueva);
+int obtenerIndicePersonajeActual(int id, personaje_t personajes[MAX_PERSONAJES], int tope);
+bool moverPersonaje(int idPersonajeActual,personaje_t personajes[MAX_PERSONAJES],int tope_personajes,char opcion);
+bool estaEnLasers(juego_t* juego);
+bool estaEnRobot(robot_t robots[MAX_ROBOTS],int tope_robots, personaje_t personaje);
+bool estaEnPinzas(coordenada_t pinzas[MAX_PINZAS],int tope_pinzas,personaje_t personaje);
+coordenada_t obtenerCoordenadasAlrededorDelRobot(coordenada_t posicionDelRobot);
+int obtenerIndiceDelRobotActual(int id, robot_t robots[MAX_ROBOTS], int tope);
+bool coordenadaEstaDentroDelTerreno(coordenada_t coordenada);
+coordenada_t obtenerCoordenadaDentroDelTerreno(coordenada_t posicionesVecinas[MAX_COORDENADAS]);
+bool estaEnElPersonajeSiguiente(personaje_t personajes[MAX_PERSONAJES],int tope_personajes,int indicePersonaje);
+void asignarCoordenadasVecinasAlRobot(coordenada_t posicionDelRobot,coordenada_t posicionesVecinas[MAX_COORDENADAS]);
 #endif /* __AUXILIARES_H__ */

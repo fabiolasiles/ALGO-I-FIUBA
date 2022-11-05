@@ -19,6 +19,7 @@
 #define GANADO 1
 #define PERDIDO -1
 #define SIGUE_JUGANDO 0
+
 void mostrarOpcionesDeJugada();
 void mostrarPresentacion();
 int obtenerOpcionPresentacion();

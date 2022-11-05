@@ -34,17 +34,6 @@ bool validar_contrasenia(char contrasenia_adivinada[MAX_CONTRASENIA]){
 //_______________________________________________________________________________________________________________________
 
 
-
-
-
-
-//----------------------------------------------A PARTIR DE ACÀ MI CÒDIGO---------------------------------------------------------
-
-
-
-
-
-
 //-------------------------------------------- -------------------------FUNCIONES SOBRE ESTADOS DEL JUEGO----------------------------------------------------------------------------------
 
 bool seGanaElJuego(personaje_t personajes[MAX_PERSONAJES], int tope){
@@ -76,11 +65,6 @@ bool sePierdeElJuego(personaje_t personajes[MAX_PERSONAJES], int tope){
 
 
 //_________________________________________________________________________________FIN__________________________________________________________________________
-
-
-
-
-
 
 
 
@@ -285,7 +269,7 @@ coordenada_t coordenada_aleatoria(int cuadrante){
 
 //asigna los elementos del 2do vector al primero
 void asignarCoordenadas(coordenada_t coordenadas[MAX_COORDENADAS], int* topeCoord, coordenada_t coordenadasParaAsignar[MAX_LASERS], int topeLasers){ //max_lasers podrìa ser uno genèrico
-    //Un detalle es que puedo en este caso tener coordenadas iguales, puesto puede haber laser que se chocan, podrìamos pasar las coordendas sin repetir PERO bueno...
+    //Un detalle:puedo en este caso tener coordenadas iguales, xq puede haber laser que se chocan, podrìamos pasar las coordendas sin repetir duda...
     for(int i = 0; i < topeLasers; i++){
         coordenadas[*topeCoord] = coordenadasParaAsignar[i];
         *topeCoord = *topeCoord + 1;
@@ -590,5 +574,243 @@ void llenarPinza(char matriz[20][20], coordenada_t pinza){
     matriz[pinza.fila][pinza.columna] = 'P';
 }
 
+//___________________________________________________________________________FIN MOSTRAR TERRENO_______________________________________________________________________________
 
-//_________________________________________________________________________________FIN__________________________________________________________________________
+//----------------------------------------------------------------------------------------- FUNCIONES REALIZAR JUGADA ----------------------------------------------------------------------
+
+coordenada_t obtenerCoordenadaDelMovimiento(coordenada_t posDelPersonaje, char opcion){
+	coordenada_t posicionNueva;
+	switch(opcion){
+		case IZQUIERDA:
+			posicionNueva.fila=posDelPersonaje.fila;
+			posicionNueva.columna=posDelPersonaje.columna-MOVIMIENTO;
+			break;
+		case DERECHA:
+			posicionNueva.fila=posDelPersonaje.fila;
+			posicionNueva.columna=posDelPersonaje.columna+MOVIMIENTO;
+			break;
+		case ARRIBA:
+			posicionNueva.columna=posDelPersonaje.columna;
+			posicionNueva.fila=posDelPersonaje.fila-MOVIMIENTO;
+			break;
+		case ABAJO:
+			posicionNueva.columna=posDelPersonaje.columna;
+			posicionNueva.fila=posDelPersonaje.fila+MOVIMIENTO;
+			break;
+       
+	}
+
+	return posicionNueva;
+}
+
+/*
+ * Funcion que verifica que el moviento realizado esta o no dentro de la matriz.
+ */
+
+bool EstaEnLaMatriz(coordenada_t posNueva){
+	return ((0<=posNueva.fila && posNueva.fila<=19) && (0<=posNueva.columna && posNueva.columna<=19));
+}
+
+/*
+ * Busca el  id de un personaje  en el vector personajes y devuelve su posicion se asume que la cantidad de personajes(tope) 
+ * es mayor que cero y que siempre habra un personaje con el id valido.
+ */
+int obtenerIndicePersonajeActual(int id, personaje_t personajes[MAX_PERSONAJES], int tope){
+	int i = 0;
+	bool encontrado= false;
+	while (!(encontrado) && i < tope){
+		if (id == personajes[i].cuadrante_inicial){
+			encontrado = true;
+		}
+		i++;
+	}
+	return i - 1;
+}
+
+
+
+/*
+ * Moverá el personaje hacia la dirección que se ingreso.
+ * Si se sale de la matriz se le resta un movimiento 
+ * Si movio el personaje correctamente devuelve  true sino false
+ */
+bool moverPersonaje(int idPersonajeActual,personaje_t personajes[MAX_PERSONAJES],int tope_personajes,char opcion){
+	bool estado = false;
+   int indicePersonaje = obtenerIndicePersonajeActual(idPersonajeActual, personajes, tope_personajes);
+   coordenada_t posNueva = obtenerCoordenadaDelMovimiento(personajes[indicePersonaje].posicion,opcion);
+
+    if(EstaEnLaMatriz(posNueva)){
+        personajes[indicePersonaje].posicion = posNueva; 
+		estado = true;
+    }
+	personajes[indicePersonaje].movimientos --; 
+	return estado;
+   
+}
+
+
+
+
+
+
+
+/* 
+ * Verifica si el personaje esta en alguna posicion donde esten cualquiera de los lasers.
+ */
+
+
+bool estaEnLasers(juego_t*  juego){
+	
+	int i=0;
+	
+    bool encontrado = false;
+    int indicePersonaje = obtenerIndicePersonajeActual(juego->id_personaje_actual,juego->personajes,juego->tope_personajes);
+    while(i<juego->tope_robots && encontrado==false){
+        encontrado = buscarCoordenada(juego->robots[i].lasers, juego->robots[i].tope_lasers, juego->personajes[indicePersonaje].posicion);
+        
+        i++;   
+    }
+    return encontrado;
+}
+
+
+/* 
+ * Verifica si el personaje esta en alguna posicion donde esten cualquiera de los robot.
+ */
+
+bool estaEnRobot(robot_t robots[MAX_ROBOTS],int tope_robots, personaje_t personaje){
+    int i = 0;
+    bool encontrado = false;
+    while((i<tope_robots)&&(!encontrado)){
+        if (comparararCoordenadas(robots[i].posicion,personaje.posicion)){
+            encontrado = true;
+        }
+        i++;
+    }
+
+  return encontrado;
+
+}
+
+/* 
+ * Verifica si el personaje esta en alguna posicion donde este cualquiera pinza.
+ */
+
+bool estaEnPinzas(coordenada_t pinzas[MAX_PINZAS], int tope_pinzas,personaje_t personaje){
+     int i = 0;
+    bool encontrado = false;
+    while((i<tope_pinzas)&&(!encontrado)){
+        if (comparararCoordenadas(pinzas[i],personaje.posicion)){
+            encontrado = true;
+        }
+        i++;
+    }
+
+  return encontrado;
+
+}
+
+
+int obtenerCuadrante(coordenada_t coordenada){
+    int cuadrante;
+    if((coordenada.fila>=0)&& (coordenada.fila<=9)){
+        if((coordenada.columna>=0)&&(coordenada.columna<=9)){
+            cuadrante=  PRIMER_CUADRANTE;
+
+        }else if((coordenada.columna>=10)&&(coordenada.columna<=19)){
+            cuadrante=  CUARTO_CUADRANTE;
+        }
+
+    }else if((coordenada.fila>=10)&& (coordenada.fila<=19)){
+        if((coordenada.columna>=0)&&(coordenada.columna<=9)){
+            cuadrante=  TERCER_CUADRANTE;
+
+        }else if((coordenada.columna>=10)&&(coordenada.columna<=19)){
+            cuadrante=  SEGUNDO_CUADRANTE;
+        }
+    }
+    return cuadrante;
+
+}
+
+
+
+void asignarCoordenadasVecinasAlRobot(coordenada_t posicionDelRobot,coordenada_t posicionesVecinas[MAX_COORDENADAS]){
+        posicionesVecinas[0].fila = posicionDelRobot.fila-1;
+        posicionesVecinas[0].columna = posicionDelRobot.columna;
+        posicionesVecinas[1].fila = posicionDelRobot.fila;
+        posicionesVecinas[1].columna = posicionDelRobot.columna+1;
+        posicionesVecinas[2].fila = posicionDelRobot.fila+1;
+        posicionesVecinas[2].columna = posicionDelRobot.columna;
+        posicionesVecinas[3].fila = posicionDelRobot.fila;
+        posicionesVecinas[3].columna = posicionDelRobot.columna-1;
+
+
+        posicionesVecinas[4].fila = posicionesVecinas[0].fila;
+        posicionesVecinas[4].columna = posicionesVecinas[3].columna;
+        
+        posicionesVecinas[5].fila = posicionesVecinas[0].fila;
+        posicionesVecinas[5].columna = posicionesVecinas[1].columna;
+
+        posicionesVecinas[6].fila = posicionesVecinas[2].fila;
+        posicionesVecinas[6].columna = posicionesVecinas[1].columna;
+
+        posicionesVecinas[7].fila = posicionesVecinas[2].fila;
+        posicionesVecinas[7].columna = posicionesVecinas[3].columna;
+}
+
+
+/*
+ * Busca la posicion del robot actual correspondiente al personaje con el  que se esta jugando.
+ */
+int obtenerIndiceDelRobotActual(int id, robot_t robots[MAX_ROBOTS], int tope){
+	int i = 0;
+    int cuadrante;
+	bool encontrado= false;
+	while (!(encontrado) && i < tope ){
+        cuadrante = obtenerCuadrante(robots[i].posicion);
+		if (id == cuadrante){
+			encontrado = true;
+		}
+		i++;
+	}
+	return i - 1;
+}
+
+bool coordenadaEstaDentroDelTerreno(coordenada_t coordenada){
+    return (coordenada.fila>=0 && coordenada.fila<=19 && coordenada.columna>=0 && coordenada.columna<=19);
+}
+
+
+coordenada_t obtenerCoordenadaDentroDelTerreno(coordenada_t posicionesVecinas[MAX_COORDENADAS]){
+    int indiceAleatoria = rand()% 9;
+    bool estaEnTerreno = false;
+    while(!estaEnTerreno){
+        estaEnTerreno = coordenadaEstaDentroDelTerreno(posicionesVecinas[indiceAleatoria]);
+        if(!estaEnTerreno){
+            indiceAleatoria = rand()%9;
+        }
+    }
+    return posicionesVecinas[indiceAleatoria];
+}
+bool estaEnElPersonajeSiguiente(personaje_t personajes[MAX_PERSONAJES],int tope_personajes,int indicePersonaje){
+    int i =0;
+    bool seEncontro =false;
+    personaje_t personajeActual = personajes[indicePersonaje];
+    while(i<=tope_personajes && (!seEncontro)){
+        if((i!= indicePersonaje)){
+            if (comparararCoordenadas(personajeActual.posicion,personajes[i].posicion) && personajeActual.cuadrante_inicial +1 == personajes[i].cuadrante_inicial){
+                seEncontro = true;
+            }
+
+        }
+        i++;
+
+    }
+    return seEncontro;
+}
+
+
+
+
+//___________________________________________________________________________FIN _______________________________________________________________________________

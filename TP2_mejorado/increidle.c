@@ -117,7 +117,7 @@ char pregunta_tigre_de_la_princesa_jazmin(char* opcion_pregunta_tres){
         printf(" (C) Rajah\n");
         printf(" (D) Jafar\n");
         scanf(" %c",opcion_pregunta_tres);
-        printf("LA RESPUESTA ES: %c",(*opcion_pregunta_tres));
+        //printf("LA RESPUESTA ES: %c",(*opcion_pregunta_tres));
     }
     return (*opcion_pregunta_tres);
 }
@@ -259,7 +259,7 @@ void adivinar_contrasenia(char contrasenia_adivinada[MAX_CONTRASENIA ]){
     respuesta_tres = verificar_son_primos(numeros,tope_numeros);  
     respuesta_cuatro = pregunta_numero_rayo(&respuesta_cuatro);
     respuesta_cinco= pregunta_tigre_de_la_princesa_jazmin(&opcion_pregunta_cinco);
-    printf("TERMINA DE HACER PREGUNTAS------------------------------------");
+
     //comprobar_mostrar_respuestas(respuesta_uno,respuesta_dos,respuesta_tres,respuesta_cuatro,respuesta_cinco);
     char primer_letra_contrasenia = comprobar_letra(respuesta_uno,OPCION_CORRECTA_CODIGO_DE_MEDIA,LETRA_CONTRASENIA_UNO);
     char segunda_letra_contrasenia = comprobar_letra(respuesta_dos,OPCION_CORRECTA_MASCOTA_DE_LILO,LETRA_CONTRASENIA_DOS);
@@ -267,16 +267,11 @@ void adivinar_contrasenia(char contrasenia_adivinada[MAX_CONTRASENIA ]){
     char sexta_letra_contrasenia = asignar_letra(respuesta_tres);
     char cuarta_letra_contrasenia = comprobar_numero(respuesta_cuatro,LETRA_CONTRASENIA_CUATRO);
     char quinta_letra_contrasenia = comprobar_letra(respuesta_cinco,OPCION_CORRECTA_TIGRE_DE_LA_PRINCESA,LETRA_CONTRASENIA_CINCO);
-    printf("TERMINA DE VALIDAR ------------------------------");
     contrasenia_adivinada[0] = primer_letra_contrasenia ;
     contrasenia_adivinada[1] = segunda_letra_contrasenia;
     contrasenia_adivinada[2] = tercera_letra_contrasenia;
     contrasenia_adivinada[3] = cuarta_letra_contrasenia;
     contrasenia_adivinada[4] = sexta_letra_contrasenia;
-    printf("GUARDO HASTA LA 4TA POSICION------------------------------------------------");
     contrasenia_adivinada[5] = quinta_letra_contrasenia;
-
-
-
 
 }

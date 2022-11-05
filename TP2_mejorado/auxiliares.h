@@ -155,7 +155,7 @@ void llenarPinza(char matriz[20][20], coordenada_t pinza);
 void asignarPosPinzas(coordenada_t pinzas[MAX_PINZAS], int* tope_pinzas, coordenada_t coordenadas[MAX], int* topeCoord);
 
 
-//-----------------------------------------------------------SUPER TRAJES--------------------------------------------------------------------------
+//-----------------------------------------------------------SUPERTRAJES--------------------------------------------------------------------------
 
 
 /*

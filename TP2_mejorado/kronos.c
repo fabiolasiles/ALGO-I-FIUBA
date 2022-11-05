@@ -20,7 +20,7 @@ void inicializar_juego(juego_t* juego, bool contrasenia_completa){
     asignarPosPinzas(juego->pinzas, &juego->tope_pinzas, coordenadas, &tope);
     juego->id_personaje_actual = 1;
     
-    mostrarCoordenadas(coordenadas, tope);
+    //mostrarCoordenadas(coordenadas, tope);
 }
 
 

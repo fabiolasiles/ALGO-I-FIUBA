@@ -13,7 +13,7 @@ void mostrarCoordenadas(coordenada_t coordenadas[MAX], int tope){
         mostrarCoordenada(coordenadas[i]);
     }
 }
-
+/*
 void mostrarRobots(robot_t robots[MAX_ROBOTS], int topeRobot){
     for(int i = 0 ; i < topeRobot; i++){
         printf("---------Posiciòn del Robot : ---------\n");
@@ -23,7 +23,7 @@ void mostrarRobots(robot_t robots[MAX_ROBOTS], int topeRobot){
 
 
     }    
-}
+}*/
 
 
 bool validar_contrasenia(char contrasenia_adivinada[MAX_CONTRASENIA]){
@@ -95,11 +95,8 @@ void asignarPosPinzas(coordenada_t pinzas[MAX_PINZAS], int* tope_pinzas, coorden
             pos++;
         }
 
-    }
-
-    printf("--------------------------------------------------------------PINZAS---------------------------------------\n");
-    mostrarCoordenadas(pinzas, *tope_pinzas);
-    printf("------------------------------------------------------------------------------------------------------------\n");
+    } 
+    //mostrarCoordenadas(pinzas, *tope_pinzas);    
 }
 
 
@@ -111,16 +108,12 @@ void asignarPosPinzas(coordenada_t pinzas[MAX_PINZAS], int* tope_pinzas, coorden
 void asignarPosSuperTraje(supertraje_t superTrajes[MAX_SUPERTRAJES], int tope, coordenada_t coordenadas[MAX_COORDENNADAS], int* topeCoord){
     
     int cuadrante  = 1;
-    printf("--------------------------------------------TOPE DEL SUPER TRAJE\n");
-    printf("%i", tope);
-    printf("----------------------------SUPER TRAJES-----------------");
     for(int i = 0; i < tope; i++){
         superTrajes[i].posicion = obtenerCordeAleatoriaValida(coordenadas, topeCoord, cuadrante);
         cuadrante++;
         
-        mostrarCoordenada(superTrajes[i].posicion);
+       // mostrarCoordenada(superTrajes[i].posicion);
     }
-    printf("---------------------------------------------------------");
 }
 
 

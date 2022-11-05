@@ -32,3 +32,79 @@
     */
 
 
+
+
+
+COSAS A TENER EN CUENTA
+
+void asignarCoordenadas(coordenada_t coordenadas[MAX_COORDENADAS], int* topeCoord, coordenada_t coordenadasParaAsignar[MAX_LASERS], int topeLasers){ 
+    //Un detalle:puedo en este caso tener coordenadas iguales, xq puede haber laser que se chocan, podrìamos pasar las coordendas sin repetir duda...
+    for(int i = 0; i < topeLasers; i++){
+        coordenadas[*topeCoord] = coordenadasParaAsignar[i];
+        *topeCoord = *topeCoord + 1;
+    }
+    
+
+}
+
+
+
+ESTA FUNCIONE STABA EN  INTERFAZ.C
+
+void inicializar(){
+
+    int opcionPresentacion = obtenerOpcionPresentacion();
+
+    if(opcionPresentacion == INICIAR_JUEGO){
+
+        juego_t juego;
+
+        srand((unsigned)time(NULL));
+        char contrasenia_adivinada[MAX_CONTRASENIA];
+        adivinar_contrasenia(contrasenia_adivinada);
+        bool contrasenia_completa = validar_contrasenia(contrasenia_adivinada);
+
+        limpiarPantalla();
+        inicializar_juego(&juego, contrasenia_completa);
+        imprimir_terreno(juego);
+        
+        char opcionDeJugada = obtenerOpcionJugada();
+        bool finDelJuego = false;
+        //bool juegoGanado = false;
+        while(!finDelJuego && toupper(opcionDeJugada) != SARLIR_JUEGO){
+
+            realizar_jugada(&juego, opcionDeJugada);
+            /*
+            if(estado_juego(juego) == GANADO){
+                // juegoGanado = JUEGO_GANADO;
+                finDelJuego = true;
+                mostrarMensajeDelJuego(JUEGO_GANADO);
+            }else if(estado_juego(juego) == PERDIDO){
+                finDelJuego = true;
+                mostrarMensajeDelJuego(JUEGO_PERDIDO);
+            }else{ //sigue en juego
+                imprimir_terreno(juego);
+                opcionDeJugada = obtenerOpcionJugada();
+
+            }*/
+            break;
+
+        }
+
+        if(toupper(opcionDeJugada) == SARLIR_JUEGO){
+            limpiarPantalla();
+            printf("------- LASTIMA QUE NO HAYAS QUERIDO SEGUIR JUGANDO, ESPERO VUELVAS PRONTO A INTENTARLO ;) -------\n");
+            printf("Hasta pronto! ---> El juego se cerrará en 3 segundos!\n");
+            sleep(3);
+            limpiarPantalla();
+        }
+
+    }else if(opcionPresentacion == SALIR){
+        limpiarPantalla();
+        printf("----------------------ESPERMOS QUE VUELVAS PRONTO DECIDIDO PARA JUGAR----------------\n");
+        printf("SE CERRARÁ EL PROGRAMA EN 3 SEGUDNOS\n");
+        sleep(3);
+        limpiarPantalla();
+    }
+}
+

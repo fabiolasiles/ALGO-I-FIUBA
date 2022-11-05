@@ -20,48 +20,30 @@ void inicializar_juego(juego_t* juego, bool contrasenia_completa){
     asignarPosPinzas(juego->pinzas, &juego->tope_pinzas, coordenadas, &tope);
     juego->id_personaje_actual = 1;
     
-
-
     mostrarCoordenadas(coordenadas, tope);
-
 }
 
 
-
-
-
-
 void imprimir_terreno(juego_t juego){
+
     char tablero[20][20];
 
     inicializar_matriz(tablero,20,20);
-    //Se podrìa optimizar eso con funciones y no utilizar este for acà
     for (int i=0;i<4;i++){
         llenarRobot(tablero, 20, 20,juego.robots[i].lasers, juego.robots[i].tope_lasers, juego.robots[i].posicion);
         llenar_personaje(tablero, 20, 20,juego.personajes[i].posicion, juego.personajes[i].cuadrante_inicial);
         llenarSuperTraje(tablero,juego.supertrajes[i]);
     }
 
-    //se harcodea por la cantidad de pinzas
     for(int i = 0; i < 16; i++){
-        llenarPinza(tablero, juego.pinzas[i]);
+        llenarPinza(tablero, juego.pinzas[i]); 
 
     }
     mostrarTablero(tablero, 20, 20);
 }
 
 
-
-
-
-
-
-
 int estado_juego(juego_t juego){
-
-
-    //fijarme que Mr increìble estè en la posición (0,19), si se encuentra ahí ya gané, sino lo está verificar que todos los personajes tengan movimientos que raelizar
-    //puesto que sino pierdo sino pasa ninguna de las dos cosas aún se está jugando
 
     int estado = SE_SIGUE_JUGANDO;
 
@@ -78,6 +60,7 @@ int estado_juego(juego_t juego){
 
 
 void realizar_jugada(juego_t* juego, char movimiento){
+    
     int indicePersonaje = obtenerIndicePersonajeActual(juego->id_personaje_actual,juego->personajes,juego->tope_personajes);
 
     printf("----------------------------TERRENO SIN MOVER EL PERSONAJE-----------\n");
@@ -91,7 +74,7 @@ void realizar_jugada(juego_t* juego, char movimiento){
         imprimir_terreno(*juego);
         printf("-------------Muevo el Personaje\n");
         if(true){
-            printf("---------vacio luego de movel el personaje-\n");
+            printf("---------vacio luego de mover el personaje-\n");
         //1-SE USA EL PODER 
         }else if(estaEnElPersonajeSiguiente(juego->personajes,juego->tope_personajes,indicePersonaje)){
             juego->id_personaje_actual ++; 

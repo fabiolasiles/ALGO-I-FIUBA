@@ -117,7 +117,7 @@ void inicializar(){
         while(!finDelJuego && toupper(opcionDeJugada) != SARLIR_JUEGO){
 
             realizar_jugada(&juego, opcionDeJugada);
-            /*
+            
             if(estado_juego(juego) == GANADO){
                 // juegoGanado = JUEGO_GANADO;
                 finDelJuego = true;
@@ -129,8 +129,8 @@ void inicializar(){
                 imprimir_terreno(juego);
                 opcionDeJugada = obtenerOpcionJugada();
 
-            }*/
-            break;
+            }
+            //break;
 
         }
 

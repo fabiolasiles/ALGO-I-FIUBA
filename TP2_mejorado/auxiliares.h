@@ -401,5 +401,11 @@ bool estaEnElPersonajeSiguiente(personaje_t personajes[MAX_PERSONAJES],int tope_
 
 void asignarCoordenadasVecinasAlRobot(coordenada_t posicionDelRobot,coordenada_t posicionesVecinas[MAX_COORDENADAS]);
 
+/*
+ * Retorna true si la posciòn del personaje está sobre el supertraje de su cuadrante inicial en caso contrario false, ademàs "borra el supertraje tomado8 pone sus coordendas en negativo"
+ */
+
+bool estaEnSuperTraje(supertraje_t supertrajes[MAX_SUPERTRAJES], int tope_supertraje, personaje_t personaje);
+
 
 #endif /* __AUXILIARES_H__ */

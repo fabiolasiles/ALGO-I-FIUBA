@@ -44,7 +44,7 @@ bool seGanaElJuego(personaje_t personajes[MAX_PERSONAJES], int tope){
 
     int pos = 0;
     bool seGana = false;
-    while(!seGana){
+    while(!seGana && pos < tope){
         if(personajes[pos].cuadrante_inicial == CUADRANTE_SALIDA && comparararCoordenadas(coordSalida, personajes[pos].posicion)){
             seGana = true;
         }
@@ -57,8 +57,10 @@ bool seGanaElJuego(personaje_t personajes[MAX_PERSONAJES], int tope){
 bool sePierdeElJuego(personaje_t personajes[MAX_PERSONAJES], int tope){
     bool sePierde = false;
     int pos = 0;
-    while(!sePierde){
-        if(personajes[pos].movimientos == 0) sePierde = true;
+    while(!sePierde && pos < tope){
+        if(personajes[pos].movimientos == 0){
+            sePierde = true;
+        } 
         pos++;
     }
     return sePierde;
@@ -124,7 +126,7 @@ supertraje_t obtener_supertraje(int cuadrante){
         supertraje.recolectado = false;
         supertraje.usado = false;
     }else if (cuadrante == SEGUNDO_CUADRANTE){
-        supertraje.cuadrante = SEGUNDO_CUADRANTE;
+        supertraje.cuadrante = CUARTO_CUADRANTE; //modificado a 4to
         supertraje.recolectado = false;
         supertraje.usado = false;
     }else if(cuadrante == TERCER_CUADRANTE){
@@ -132,7 +134,7 @@ supertraje_t obtener_supertraje(int cuadrante){
         supertraje.recolectado = false;
         supertraje.usado = false;
     }else if(cuadrante == CUARTO_CUADRANTE){
-        supertraje.cuadrante = CUARTO_CUADRANTE;
+        supertraje.cuadrante = SEGUNDO_CUADRANTE; //modificado a 2do..
         supertraje.recolectado = false;
         supertraje.usado = false;
     }
@@ -455,7 +457,9 @@ void mostrarTablero(char matriz[20][20], int topeFila, int topeCol){
 
 
 void llenarSuperTraje(char matriz[20][20], supertraje_t supertraje){
-    matriz[supertraje.posicion.fila][supertraje.posicion.columna] = 'T';
+    //if(supertraje.posicion.fila >= 0 && supertraje.posicion.columna >= 0) // si es negativo es porque el super traje ya fue obtenido por el personaje
+    if(!supertraje.recolectado)
+        matriz[supertraje.posicion.fila][supertraje.posicion.columna] = 'T';
 }
 
 
@@ -628,10 +632,13 @@ int obtenerIndiceDelRobotActual(int id, robot_t robots[MAX_ROBOTS], int tope){
 	while (!(encontrado) && i < tope ){
         cuadrante = obtenerCuadrante(robots[i].posicion);
 		if (id == cuadrante){
+            
 			encontrado = true;
 		}
 		i++;
 	}
+    printf("------------------------CUADRANTE DEL ROBOT QUE ENCONTRÈ!-------%i", cuadrante);
+    printf("\n-----------------------------ID : %i", id);
 	return i - 1;
 }
 
@@ -671,5 +678,21 @@ bool estaEnElPersonajeSiguiente(personaje_t personajes[MAX_PERSONAJES],int tope_
     return seEncontro;
 }
 
+
+bool estaEnSuperTraje(supertraje_t supertrajes[MAX_SUPERTRAJES], int tope_supertraje, personaje_t personaje){
+    bool seEncontro = false;
+    int i = 0;
+    while(!seEncontro && i < tope_supertraje){
+        if(comparararCoordenadas(personaje.posicion, supertrajes[i].posicion) && personaje.cuadrante_inicial == supertrajes[i].cuadrante){
+            seEncontro = true;
+            supertrajes[i].recolectado = true;
+            //Para "eliminarlo" se asigna los negativos, ya que a la hora de mostrarlos hay una validaciòn el cual no muetra si està en negativo,
+            //supertrajes[i].posicion.fila = -1;
+            //supertrajes[i].posicion.columna = -1;
+        }
+        i++;
+    }
+    return seEncontro;
+}
 
 //____________________________________________________________________FIN _______________________________________________________________________________

@@ -1,6 +1,9 @@
 #include "kronos.h"
 #include "auxiliares.h"
 
+#include "interfaz.h"
+#include "presentaciones.h"
+
 
 void inicializar_juego(juego_t* juego, bool contrasenia_completa){
 
@@ -67,41 +70,40 @@ void realizar_jugada(juego_t* juego, char movimiento){
     imprimir_terreno(*juego);
      //ROTAR EL LASERS
     if(movimiento =='C'){
-        printf("---");
+        if(juego->personajes[indicePersonaje].tiene_supertraje){
+            juego->personajes[indicePersonaje].poder_activado = true;
+        }else{
+            printf("NO PUEDES ACTIVAR TU PODER PORQUE NO TIENES EL SUPERTRAJE RECOLECTADO\n");
+
+        }
+        
         
     }else if( moverPersonaje(juego->id_personaje_actual,juego->personajes,juego->tope_personajes,movimiento)){
         printf("----------------------------TERRENO LUEGO DE MOVER EL PERSONAJE-----------\n");
         imprimir_terreno(*juego);
         printf("-------------Muevo el Personaje\n");
-        if(true){
+        if(false){
             printf("---------vacio luego de mover el personaje-\n");
         //1-SE USA EL PODER 
         }else if(estaEnElPersonajeSiguiente(juego->personajes,juego->tope_personajes,indicePersonaje)){
-            juego->id_personaje_actual ++; 
-
-            
-        //-personaje:DE BEDE VERIFICAR 2 COSAS:
-                        // 1) si no es el personaje conssecutivo sigo con el personaje en el juego.
-                        // 2) si el erpsonaje es el consecutivo debemos cambiar el peronaje y el juego pasa a tener el siguiente personaje.
+            juego->id_personaje_actual ++;
 
         }else if(estaEnLasers((juego))){
             juego->personajes[indicePersonaje].movimientos = 0;
 
         }else if(estaEnRobot(juego->robots,juego->tope_robots,juego->personajes[indicePersonaje])){
             juego->personajes[indicePersonaje].movimientos = 0;
-//estaEnSupertraje(juego->supertrajes,juego->tope_supertraje)
-        }else if(true){
-            //-supertaje:tengo 3 casos:
 
-        //1- si el st es el cuadrante correspondiente cambio TIENE_SUPERTRAJE = true;
-        //2- si no es el sj de el cuadrante correspondiente no pasa nada;
-        //3- si la cantidad de movientos menor que 5 es que ya lo utilice y TENGO EL SUPERTRAJEentonces quiere decir que ya use y no puedo utilizar el supertraje
-        //        una vez agarrado el st "desaparece(?"
+        }else if(estaEnSuperTraje(juego->supertrajes, juego->tope_supertraje, juego->personajes[indicePersonaje]))
+        {
+            juego->personajes[indicePersonaje].tiene_supertraje = true;
+            //serìa necesario informar por pantalla que si el superTraje que pisè es de otro cuadrante?
 
         }else if(estaEnPinzas(juego->pinzas,juego->tope_pinzas,juego->personajes[indicePersonaje])){
             coordenada_t posicionesVecinas[MAX_COORDENADAS];
             
-            int indiceRobotActual = obtenerIndiceDelRobotActual(indicePersonaje,juego->robots, juego->tope_robots);
+            int indiceRobotActual = obtenerIndiceDelRobotActual(juego->id_personaje_actual,juego->robots, juego->tope_robots);
+            printf("-----------------indice del robot actual %i", indiceRobotActual);
             asignarCoordenadasVecinasAlRobot(juego->robots[indiceRobotActual].posicion,posicionesVecinas);
             coordenada_t coordenadaNueva = obtenerCoordenadaDentroDelTerreno(posicionesVecinas);
             juego->personajes[indicePersonaje].posicion = coordenadaNueva;

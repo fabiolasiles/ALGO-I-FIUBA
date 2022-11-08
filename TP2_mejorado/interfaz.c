@@ -109,8 +109,12 @@ void inicializar(){
 
         limpiarPantalla();
         inicializar_juego(&juego, contrasenia_completa);
-        imprimir_terreno(juego);
+        printf("----------------------------VER COMO SE GUARDAN LAS COORDENDAS\n");
+        printf("-----el tope de los lasers del 1era cuadrante es : %i", juego.robots[0].tope_lasers);
+        mostrarCoordenadas(juego.robots[0].lasers, juego.robots[0].tope_lasers);
         
+        imprimir_terreno(juego);
+        sleep(10);
         char opcionDeJugada = obtenerOpcionJugada();
         bool finDelJuego = false;
         //bool juegoGanado = false;

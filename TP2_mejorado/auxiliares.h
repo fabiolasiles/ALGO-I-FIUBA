@@ -270,6 +270,11 @@ coordenada_t coordenada_aleatoria(int cuadrante);
 void asignarCoordenadas(coordenada_t coordenadas[MAX_COORDENADAS], int* topeCoord, coordenada_t coordenadasParaAsignar[MAX_LASERS], int topeLasers);
 
 
+/*Recibe dos vectores de coordenadas y compara coordendaa a coordenda, si todas 
+son iguales devuelve true en caso contrario false*/
+
+bool verificarCoordenadasIguales(coordenada_t coordenada1[MAX_COORDENADAS],int tope, coordenada_t coordenada2[MAX_COORDENADAS]);
+
 //--------------------------------------------------------------VISUALIZACIONES------------------------------------------------------------------------
 
 
@@ -407,5 +412,7 @@ void asignarCoordenadasVecinasAlRobot(coordenada_t posicionDelRobot,coordenada_t
 
 bool estaEnSuperTraje(supertraje_t supertrajes[MAX_SUPERTRAJES], int tope_supertraje, personaje_t personaje);
 
+
+void rotarRobots(robot_t robots[MAX], int topeRobots);
 
 #endif /* __AUXILIARES_H__ */

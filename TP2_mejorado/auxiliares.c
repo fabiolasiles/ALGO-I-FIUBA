@@ -695,4 +695,284 @@ bool estaEnSuperTraje(supertraje_t supertrajes[MAX_SUPERTRAJES], int tope_supert
     return seEncontro;
 }
 
+
 //____________________________________________________________________FIN _______________________________________________________________________________
+
+//ROTACION ROBOTS--------------------------------------------------------------------------------------
+void primeraRotacion(coordenada_t posicion_del_robot,int tope_lasers,coordenada_t lasersRotados[MAX_COORDENADAS]){
+    int longitud_lasers = (tope_lasers/2); 
+
+    int j = 1;
+    int k = 1;
+
+    for (int i = 0;i<tope_lasers;i++){    
+        if (i<longitud_lasers){
+            lasersRotados[i].fila = posicion_del_robot.fila -j;
+            lasersRotados[i].columna = posicion_del_robot.columna;
+            j++;
+            
+        }else{
+           
+            lasersRotados[i].fila = posicion_del_robot.fila;
+            lasersRotados[i].columna = posicion_del_robot.columna+k;
+            k++;
+            
+        }
+    }
+}
+
+
+void segundaRotacion(coordenada_t posicion_del_robot,int tope_lasers,coordenada_t lasersRotados[MAX_COORDENADAS]){
+    int longitud_lasers = (tope_lasers/2);
+    
+    int j = 1;
+    int k = 1;
+    for (int i = 0 ;i<tope_lasers;i++){    
+        if (i<longitud_lasers){
+            lasersRotados[i].fila = posicion_del_robot.fila -j;
+            lasersRotados[i].columna = posicion_del_robot.columna+j;
+            j++;
+            
+        }else{
+            
+            lasersRotados[i].fila = posicion_del_robot.fila+k;
+            lasersRotados[i].columna = posicion_del_robot.columna+k;
+            k++;   
+        }
+    }
+
+}
+
+void terceraRotacion(coordenada_t posicion_del_robot,int tope_lasers,coordenada_t lasersRotados[MAX_COORDENADAS]){
+    int longitud_lasers = (tope_lasers/2);
+   
+    int j = 1;
+    int k = 1;
+    for (int i = 0 ;i<tope_lasers;i++){    
+        if (i<longitud_lasers){
+            lasersRotados[i].fila = posicion_del_robot.fila ;
+            lasersRotados[i].columna = posicion_del_robot.columna+j;
+            j++;
+            
+        }else{
+            
+            lasersRotados[i].fila = posicion_del_robot.fila+k;
+            lasersRotados[i].columna = posicion_del_robot.columna;
+            k++;   
+        }
+    }
+    
+
+}
+
+void cuartaRotacion(coordenada_t posicion_del_robot,int tope_lasers,coordenada_t lasersRotados[MAX_COORDENADAS]){
+    int longitud_lasers = (tope_lasers/2);
+    
+    int j = 1;
+    int k = 1;
+    for (int i = 0 ;i<tope_lasers;i++){    
+        if (i<longitud_lasers){
+            lasersRotados[i].fila = posicion_del_robot.fila +j ;
+            lasersRotados[i].columna = posicion_del_robot.columna+j;
+            j++;
+            
+        }else{
+            
+            lasersRotados[i].fila = posicion_del_robot.fila+k;
+            lasersRotados[i].columna = posicion_del_robot.columna-k;
+            k++;   
+        }
+    }
+    
+}
+
+void quintaRotacion(coordenada_t posicion_del_robot,int tope_lasers,coordenada_t lasersRotados[MAX_COORDENADAS]){
+
+    int longitud_lasers = (tope_lasers/2);
+    
+    int j = 1;
+    int k = 1;
+    for (int i = 0 ;i<tope_lasers;i++){    
+        if (i<longitud_lasers){
+            lasersRotados[i].fila = posicion_del_robot.fila +j ;
+            lasersRotados[i].columna = posicion_del_robot.columna;
+            j++;
+            
+        }else{
+            
+            lasersRotados[i].fila = posicion_del_robot.fila;
+            lasersRotados[i].columna = posicion_del_robot.columna-k;
+            k++;   
+        }
+    }
+   
+
+}
+
+void sextaRotacion(coordenada_t posicion_del_robot,int tope_lasers,coordenada_t lasersRotados[MAX_COORDENADAS]){
+    int longitud_lasers = (tope_lasers/2);
+    
+    int j = 1;
+    int k = 1;
+    for (int i = 0 ;i<tope_lasers;i++){    
+        if (i<longitud_lasers){
+            lasersRotados[i].fila = posicion_del_robot.fila +j;
+            lasersRotados[i].columna = posicion_del_robot.columna-j;
+            j++;
+            
+        }else{
+            
+            lasersRotados[i].fila = posicion_del_robot.fila-k;
+            lasersRotados[i].columna = posicion_del_robot.columna-k;
+            k++;   
+        }
+    }
+
+}
+
+void septimaRotacion(coordenada_t posicion_del_robot,int tope_lasers,coordenada_t lasersRotados[MAX_COORDENADAS]){
+    int longitud_lasers = (tope_lasers/2);
+    int j = 1;
+    int k = 1;
+    for (int i = 0 ;i<tope_lasers;i++){    
+        if (i<longitud_lasers){
+            lasersRotados[i].fila = posicion_del_robot.fila ;
+            lasersRotados[i].columna = posicion_del_robot.columna-j;
+            j++;
+            
+        }else{
+            
+            lasersRotados[i].fila = posicion_del_robot.fila-k;
+            lasersRotados[i].columna = posicion_del_robot.columna;
+            k++;   
+        }
+    }
+   
+
+}
+
+void octavaRotacion(coordenada_t posicion_del_robot,int tope_lasers,coordenada_t lasersRotados[MAX_COORDENADAS]){
+    int longitud_lasers = (tope_lasers/2);
+    int j = 1;
+    int k = 1;
+    for (int i = 0 ;i<tope_lasers;i++){    
+        if (i<longitud_lasers){
+            lasersRotados[i].fila = posicion_del_robot.fila -j;
+            lasersRotados[i].columna = posicion_del_robot.columna-j;
+            j++;
+            
+        }else{
+            
+            lasersRotados[i].fila = posicion_del_robot.fila-k;
+            lasersRotados[i].columna = posicion_del_robot.columna+k;
+            k++;   
+        }
+    }
+    
+
+}
+
+
+void obtenerLasersNuevosRotados(coordenada_t posicion_del_robot,int tope_lasers,coordenada_t lasersRotados[MAX_COORDENADAS], int opcion){
+   
+    switch(opcion){
+        case 1 : 
+            primeraRotacion(posicion_del_robot,tope_lasers,lasersRotados);
+            break;
+        case 2 : 
+            segundaRotacion(posicion_del_robot,tope_lasers,lasersRotados);
+            break;
+        case 3 :
+            terceraRotacion(posicion_del_robot,tope_lasers,lasersRotados);
+            break;
+        case 4 : 
+            cuartaRotacion(posicion_del_robot,tope_lasers,lasersRotados);
+            break;
+        case 5 : 
+            quintaRotacion(posicion_del_robot,tope_lasers,lasersRotados);
+            break;
+        case 6 : 
+            sextaRotacion(posicion_del_robot,tope_lasers,lasersRotados);
+            break;
+        case 7 :
+            septimaRotacion(posicion_del_robot,tope_lasers,lasersRotados);
+            break;
+        case 8 : 
+            octavaRotacion(posicion_del_robot,tope_lasers,lasersRotados);
+            break;
+    }
+
+}
+
+
+
+int reconocerTipoDeLaser(robot_t robot){
+    coordenada_t vectorAux[MAX];
+    primeraRotacion(robot.posicion,robot.tope_lasers,vectorAux);
+    if (verificarCoordenadasIguales(robot.lasers, robot.tope_lasers, vectorAux)){
+        return 1;
+    }
+    segundaRotacion(robot.posicion,robot.tope_lasers,vectorAux);
+    if (verificarCoordenadasIguales(robot.lasers, robot.tope_lasers, vectorAux)){
+        return 2;
+    }
+    terceraRotacion(robot.posicion, robot.tope_lasers, vectorAux);
+    if(verificarCoordenadasIguales(robot.lasers,robot.tope_lasers, vectorAux)){
+        return 3;
+    }
+    cuartaRotacion(robot.posicion,robot.tope_lasers,vectorAux);
+    if (verificarCoordenadasIguales(robot.lasers, robot.tope_lasers, vectorAux)){
+        return 4;
+    }
+    quintaRotacion(robot.posicion, robot.tope_lasers, vectorAux);
+    if(verificarCoordenadasIguales(robot.lasers, robot.tope_lasers, vectorAux)){
+        return 5;
+    }
+    sextaRotacion(robot.posicion,robot.tope_lasers,vectorAux);
+    if (verificarCoordenadasIguales(robot.lasers, robot.tope_lasers, vectorAux)){
+        return 6;
+    }
+    septimaRotacion(robot.posicion, robot.tope_lasers, vectorAux);
+    if(verificarCoordenadasIguales(robot.lasers,robot.tope_lasers, vectorAux)){
+        return 7;
+    }
+    octavaRotacion(robot.posicion,robot.tope_lasers,vectorAux);
+    if (verificarCoordenadasIguales(robot.lasers, robot.tope_lasers, vectorAux)){
+        return 8;
+    }
+    return -1;//verificar 
+
+}
+
+
+
+void asignarLaserRotados(coordenada_t lasers[MAX_LASERS], int tope, coordenada_t laserNuevo[MAX_LASERS]){
+    for(int i = 0 ; i < tope; i++){
+        lasers[i] = laserNuevo[i]; 
+    }
+}
+
+
+void rotarRobots(robot_t robots[MAX], int topeRobots){
+    int  tipoDeRotacion= 0;
+    coordenada_t vectorNuevoLasers[MAX];
+    for(int i = 0;i<topeRobots;i++){
+        tipoDeRotacion = reconocerTipoDeLaser(robots[i]);
+        obtenerLasersNuevosRotados(robots[i].posicion, robots[i].tope_lasers, vectorNuevoLasers, tipoDeRotacion%8);
+        asignarLaserRotados(robots[i].lasers, robots[i].tope_lasers, vectorNuevoLasers);
+    }
+
+}
+
+
+bool verificarCoordenadasIguales(coordenada_t coordenada1[MAX_COORDENADAS],int tope, coordenada_t coordenada2[MAX_COORDENADAS]){
+    int i = 0;
+    bool todosIguales = true;
+    while(todosIguales && i < tope){
+        if(!comparararCoordenadas(coordenada1[i], coordenada2[i])){
+            todosIguales = false;
+        }
+        i++;
+    }
+    return todosIguales;
+}

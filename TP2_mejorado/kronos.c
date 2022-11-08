@@ -1,7 +1,7 @@
 #include "kronos.h"
 #include "auxiliares.h"
 
-#include "interfaz.h"
+#include "Interfaz.h"
 #include "presentaciones.h"
 
 
@@ -82,6 +82,11 @@ void realizar_jugada(juego_t* juego, char movimiento){
         printf("----------------------------TERRENO LUEGO DE MOVER EL PERSONAJE-----------\n");
         imprimir_terreno(*juego);
         printf("-------------Muevo el Personaje\n");
+
+        printf("------------------------MOSTRAR ROTADO ---------\n");
+        rotarRobots(juego->robots, juego->tope_robots);
+        imprimir_terreno(*juego);
+        printf("\n\n\n-------------------------------------------------\n");
         if(false){
             printf("---------vacio luego de mover el personaje-\n");
         //1-SE USA EL PODER 

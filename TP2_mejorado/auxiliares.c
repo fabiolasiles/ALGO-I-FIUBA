@@ -958,7 +958,7 @@ void rotarRobots(robot_t robots[MAX], int topeRobots){
     coordenada_t vectorNuevoLasers[MAX];
     for(int i = 0;i<topeRobots;i++){
         tipoDeRotacion = reconocerTipoDeLaser(robots[i]);
-        obtenerLasersNuevosRotados(robots[i].posicion, robots[i].tope_lasers, vectorNuevoLasers, tipoDeRotacion%8);
+        obtenerLasersNuevosRotados(robots[i].posicion, robots[i].tope_lasers, vectorNuevoLasers, tipoDeRotacion%8+1);
         asignarLaserRotados(robots[i].lasers, robots[i].tope_lasers, vectorNuevoLasers);
     }
 
@@ -970,6 +970,7 @@ bool verificarCoordenadasIguales(coordenada_t coordenada1[MAX_COORDENADAS],int t
     bool todosIguales = true;
     while(todosIguales && i < tope){
         if(!comparararCoordenadas(coordenada1[i], coordenada2[i])){
+           
             todosIguales = false;
         }
         i++;

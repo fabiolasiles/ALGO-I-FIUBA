@@ -121,5 +121,8 @@ void realizar_jugada(juego_t* juego, char movimiento){
         }
     }else{
         printf("No puede moverse fuera del terreno");
+        rotarRobots(juego->robots, juego->tope_robots);
+        imprimir_terreno(*juego);
+        
     }
 }
